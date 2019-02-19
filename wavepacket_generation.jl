@@ -6,11 +6,4 @@ delta_x = 0.0005
 delta_t = 0.2
 k_0 = 500.0                                     # decimal point so that it creates a float
 psi = C.*exp.((-(x-x_0).^2)./sigma_squared).*exp.((k_0*x)*1im) # equation as in book
-using Plots
-plotlyjs()
-subplot(2,2,1)
-plotly.newplot(rand(5,5))
-subplot(2,2,2)
-plotly.newplot(rand(5,5))
-subplot(2,2,3)
-plotly.newplot(rand(5,5))
+writedlm("test.txt", psi, ',')
