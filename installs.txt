@@ -1,0 +1,5 @@
+import Pkg
+Pkg.add("Plots")
+Pkg.add("PlotlyJS")
+Pkg.add("Blink")
+Blink.AtomShell.install()
