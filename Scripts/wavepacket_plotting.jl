@@ -1,6 +1,6 @@
 using DelimitedFiles
-rpsi = readdlm("psi.txt", ',', ComplexF64)
-rx = readdlm("x.txt", ',', Float64)
+rpsi = readdlm("Files/psi.txt", ',', ComplexF64)
+rx = readdlm("Fiels/x.txt", ',', Float64)
 
 using Plots
 plot(layout = 3)
@@ -25,4 +25,4 @@ plot!(rx,real(rpsi.*conj(rpsi)),
         subplot = 3,
         legend = false
         )
-savefig("Plots.png")
+savefig("Figures/Plots.png")
