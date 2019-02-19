@@ -9,27 +9,26 @@ psi = C.*exp.((-(x-x_0).^2)./sigma_squared).*exp.((k_0*x)*1im) # equation as in 
 using DelimitedFiles
 writedlm("psi.txt", psi, ',')   # writing psi to a file
 using Plots
-plot(x,real(psi),
+plot(layout = 3)
+plot!(x,real(psi),
         title = "Real part of wavefunction",
         xlabel = "Distance",
         ylabel = "Re(wavefunction)",
+        subplot = 1,
         legend = false
         )
-savefig("Plot1.png")
-
-plot(x,imag(psi),
+plot!(x,imag(psi),
         title = "Imaginary part of wavefunction",
         xlabel = "Distance",
         ylabel = "Im(wavefunction)",
+        subplot = 2,
         legend = false
         )
-savefig("Plot2.png")
-
-y = conj(psi).*psi
-plot(x,y,
+plot!(x,real(psi.*conj(psi)),
         title = "Probability of finding a particle",
         xlabel = "Distance",
-        #ylabel = "psi*conj(psi)",
+        ylabel = "psi*conj(psi)",
+        subplot = 3,
         legend = false
         )
-savefig("Plot3.png")
+#savefig("Plots.png")
