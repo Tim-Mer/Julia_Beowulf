@@ -1,9 +1,9 @@
 using DelimitedFiles
 rpsi = readdlm("Files/psi.txt", ',', ComplexF64)
-rx = readdlm("Fiels/x.txt", ',', Float64)
+rx = readdlm("Files/x.txt", ',', Float64)
 
 using Plots
-plot(layout = 3)
+plt = plot(layout = 3)
 plot!(rx,real(rpsi),
         title = "Real part of wavefunction",
         xlabel = "Distance",
@@ -25,4 +25,5 @@ plot!(rx,real(rpsi.*conj(rpsi)),
         subplot = 3,
         legend = false
         )
-savefig("Figures/Plots.png")
+savefig(plt, "Figures/Plots.png")
+display(plt)
