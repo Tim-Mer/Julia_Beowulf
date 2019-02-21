@@ -1,7 +1,7 @@
 # reading in files using the approatiate datatype
 using DelimitedFiles
-rpsi = readdlm("Files/psi.txt", ',', ComplexF64)
-rx = readdlm("Files/x.txt", ',', Float64)
+rpsi = readdlm("./Files/psi.txt", ',', ComplexF64)
+rx = readdlm("./Files/x.txt", ',', Float64)
 
 # plotting all 3 plots
 using Plots

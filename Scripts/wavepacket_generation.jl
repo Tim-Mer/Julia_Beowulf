@@ -10,5 +10,5 @@ psi = C.*exp.((-(x-x_0).^2)./sigma_squared).*exp.((k_0*x)*1im) # equation as in 
 # using the . is for elementwise operations
 # saving psi and x to files so that they can be read by the plotting script
 using DelimitedFiles
-writedlm("Files/x.txt", x, ',')
-writedlm("Files/psi.txt", psi, ',')
+writedlm("./Files/x.txt", x, ',')
+writedlm("./Files/psi.txt", psi, ',')
