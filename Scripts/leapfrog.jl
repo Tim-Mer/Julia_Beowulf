@@ -21,7 +21,8 @@ R_cur = R_init
 # t=t+delta_t/2;
 I_next = imag_psi(N, I_cur, R_cur, delta_t, delta_x, V)
 # Do the leapfrog
-for time_step in 1:15000
+anim = @animate for time_step in 1:15000
+   global R_cur, I_cur, R_next, I_next, N, delta_t, delta_x, V
    R_next = real_psi(N, R_cur, I_cur, delta_t, delta_x, V)
    R_cur = R_next
    I_next = imag_psi(N, I_cur, R_cur, delta_t, delta_x, V)
@@ -35,3 +36,5 @@ for time_step in 1:15000
    legend = false
    )
 end
+
+gif(anim, "LeapFrog.gif")
