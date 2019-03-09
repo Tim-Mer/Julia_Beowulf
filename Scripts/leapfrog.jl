@@ -30,7 +30,7 @@ anim = @animate for time_step in 1:15000
    I_cur = I_next
    plot(x, prob_density,#'-b','LineWidth',2
       title = "Reflection from cliff",
-      # axis([0 1 0 200])
+      ylims = (0, 200),
       xlabel = "x",
       ylabel = "Probability density",
       legend = false
