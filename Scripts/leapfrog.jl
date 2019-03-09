@@ -29,11 +29,11 @@ anim = @animate for time_step in 1:15000
    prob_density = R_cur.^2+I_next.*I_cur
    I_cur = I_next
    plot(x, prob_density,#'-b','LineWidth',2
-   title = "Reflection from cliff",
-   # axis([0 1 0 200])
-   xlabel = "x",
-   ylabel = "Probability density",
-   legend = false
+      title = "Reflection from cliff",
+      # axis([0 1 0 200])
+      xlabel = "x",
+      ylabel = "Probability density",
+      legend = false
    )
 end every 10
 
