@@ -5,11 +5,11 @@ N = 1000
 x = collect(0:(1/(N-1)):1)
 x_0 = fill(0.4, N)
 C = fill(10.0, N)
-sigma_squared = fill(1e-3, N)
+σ_sqrd = fill(1e-3, N)
 k_0 = 500.0
-delta_x = 1e-3
-delta_t = 5e-8
-psi = C.*exp.((-(x-x_0).^2)./sigma_squared).*exp.((k_0*x)*1im)
+Δ_x = 1e-3
+Δ_t = 5e-8
+ψ = C.*exp.((-(x-x_0).^2)./σ_sqrd).*exp.((k_0*x)*1im)
 R_init = real(psi)
 I_init = imag(psi)
 V = fill(0.0, N)
@@ -19,16 +19,16 @@ end
 I_cur = I_init
 R_cur = R_init
 # t=t+delta_t/2;
-I_next = imag_psi(N, I_cur, R_cur, delta_t, delta_x, V)
+I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 # Do the leapfrog
 anim = @animate for time_step in 1:15000
-   global R_cur, I_cur, R_next, I_next, N, delta_t, delta_x, V
-   R_next = real_psi(N, R_cur, I_cur, delta_t, delta_x, V)
+   global R_cur, I_cur#, R_next, I_next, N, Δ_t, Δ_x, V
+   R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
    R_cur = R_next
-   I_next = imag_psi(N, I_cur, R_cur, delta_t, delta_x, V)
+   I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    prob_density = R_cur.^2+I_next.*I_cur
    I_cur = I_next
-   plot(x, prob_density,#'-b','LineWidth',2
+   plot(x, prob_density,
       title = "Reflection from cliff",
       ylims = (0, 200),
       xlabel = "x",
