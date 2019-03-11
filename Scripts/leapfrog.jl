@@ -35,6 +35,6 @@ anim = @animate for time_step in 1:15000
    ylabel = "Probability density",
    legend = false
    )
-end
-
-gif(anim, "LeapFrog.gif")
+end every 10
+using Plots
+gif(anim, "Figures/LeapFrog.gif")
