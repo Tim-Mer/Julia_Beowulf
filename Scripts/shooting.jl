@@ -13,16 +13,15 @@ b = 1.5
 last_diverge = 0
 minimum_delta_E = 0.005
 E = E_initial
-
-
-
+j = 1
 while abs(delta_E) > minimum_delta_E
-    global E, psi, i
+    global E, psi, i, last_diverge, delta_E, j, plt
+    j = j+1
     psi = fill(0.0, N)
     psi[1] = 1
     psi[2] = 1
     psi,i = calculate_psi(psi, N, delta_x, E, b,V)
-    anim = plot(x, psi,
+    plt = plot(x, psi,
     title = "Square well",
     xlims = (0, 2),
     ylims = (-2, 2),
@@ -30,10 +29,11 @@ while abs(delta_E) > minimum_delta_E
     ylabel = "Wavefunction",
     legend = false
     )
-    frame(anim)
-    if sign(psi[i+1])~=sign(last_diverge)
-        delta_E=-delta_E/2;
+    if sign(psi[i+1]) != sign(last_diverge)
+        delta_E = -delta_E/2
     end
-    E=E+delta_E;
-    last_diverge=sign(psi[i+1]);
-  end
+    E = E + delta_E
+    last_diverge = sign(psi[i+1])
+    display(plt)
+    sleep(0.5)
+end
