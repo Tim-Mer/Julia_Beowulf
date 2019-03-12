@@ -30,7 +30,7 @@ anim = @animate for time_step = 1:15000
    title = "Reflection from cliff",
    xlabel = "x",
    ylabel = "Probability density",
-   ylims(0,1),
+   ylims = (0,200),
    legend = false
    )
 end every 10
