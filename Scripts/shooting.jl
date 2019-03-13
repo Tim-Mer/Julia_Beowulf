@@ -15,8 +15,7 @@ minimum_delta_E = 0.005
 E = E_initial
 j = 1
 while abs(delta_E) > minimum_delta_E
-    global E, psi, i, last_diverge, delta_E, j, plt
-    j = j+1
+    global E, psi, i, last_diverge, delta_E, plt
     psi = fill(0.0, N)
     psi[1] = 1
     psi[2] = 1
