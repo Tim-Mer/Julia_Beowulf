@@ -1,11 +1,10 @@
-using Plots
 include("Real.jl")
 include("Imag.jl")
 N = 1000
 x = collect(0:(1/(N-1)):1)
 x_0 = fill(0.4, N)
 C = fill(10.0, N)
-sigma_squared = fill(1e-3, N)
+σ_sqrd = fill(1e-3, N)
 k_0 = 500.0
 Δ_x = 1e-3
 Δ_t = 5e-8
@@ -18,6 +17,7 @@ for i = 600:N
 end
 I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 
+using Plots
 # Do the leapfrog
 anim = @animate for time_step = 1:15000
    global R_cur, I_cur
