@@ -59,7 +59,8 @@ anim = @animate for time_step = 1:2000
       axis = true,
       grid = true,
       cbar = true,
-      legend = false
+      legend = false,
+      show = false
    )
 end every 5
 
