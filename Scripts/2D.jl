@@ -61,7 +61,7 @@ anim = @animate for time_step = 1:2000
       cbar = true,
       legend = false,
       show = false
-   )
+   );
 end every 5
 
 gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
