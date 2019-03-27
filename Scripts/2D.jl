@@ -9,7 +9,7 @@ sigma_squared = fill(0.01, (N,N))
 k_0 = 40.0
 delta_x = 1/200
 delta_t = 0.00001
-a = collect(0:(1/(N-1)):1)
+a = range(0, stop = 1, length = N)
 x = zeros(N,N)
 for i = 1:N
    for j = 1:N
@@ -25,7 +25,7 @@ end
 V = zeros(N,N)
 for i = 1:N
    for j = 100:200
-      V[i,j] = -1e3
+      V[i,j] = 1e3
    end
 end
 # Create a 2D potential wall
@@ -40,27 +40,33 @@ I_current = I_initial
 R_current = R_initial
 I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
 using Plots
-for time_step = 1:2000
-   global R_current, I_current, N, delta_t, delta_x, V
+anim = @animate for time_step = 1:2000
+   global R_current, I_current, N, delta_t, delta_x, V, prob_density
    R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V)
    R_current = R_next
    I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
    prob_density = R_current.^2 + I_next.*I_current
    I_current = I_next
-   plt = plot3d(x,y, prob_density,
+   surface(x[1,:],y[:,1], prob_density,
       title = "Probability density function",
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
+<<<<<<< HEAD
       xlims = (1,0), ylims = (0,1), zlims = (0,100),
       palette = cgrad(:curl).colors,
+=======
+      xlims = (0,1), ylims = (0,1), zlims = (0,100),
+      color = :deep,
+>>>>>>> 45a10eddd2b75e475ec06db632dc16b8e6b3a2ab
       #lw = 3,
+      #st = [:surface, :contourf],
       axis = true,
       grid = true,
       cbar = true,
-      legend = false
-   )
-   display(plt)
-end
+      legend = false,
+      show = false
+   );
+end every 5
 
-#gif(anim, "./Figures/2D_Leapfrog.gif", fps=30)
+gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
