@@ -1,3 +1,5 @@
+ENV["PLOTS_TEST"] = "true"
+ENV["GKSwstype"] = "100"
 include("Real.jl")
 include("Imag.jl")
 N = 1000
@@ -35,4 +37,4 @@ anim = @animate for time_step = 1:15000
    )
 end every 10
 
-gif(anim, "./Figures/LeapFrog.gif", fps=30)
+gif(anim, "../Figures/LeapFrog.gif", fps=30)

@@ -1,3 +1,5 @@
+ENV["PLOTS_TEST"] = "true"
+ENV["GKSwstype"] = "100"
 include("Imag.jl")
 include("Imag_2D.jl")
 include("Real_2D.jl")
@@ -25,7 +27,7 @@ end
 V = zeros(N,N)
 for i = 1:N
    for j = 100:200
-      V[i,j] = 1e3
+      V[i,j] = -1e3
    end
 end
 # Create a 2D potential wall
@@ -48,12 +50,12 @@ anim = @animate for time_step = 1:2000
    prob_density = R_current.^2 + I_next.*I_current
    I_current = I_next
    surface(x[1,:],y[:,1], prob_density,
-      title = "Probability density function",
+      title = "Probability density function (cliff)",
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
-      color = :deep,
+      color = :speed,
       #lw = 3,
       #st = [:surface, :contourf],
       axis = true,
@@ -64,4 +66,4 @@ anim = @animate for time_step = 1:2000
    );
 end every 5
 
-gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
