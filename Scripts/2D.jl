@@ -54,8 +54,17 @@ anim = @animate for time_step = 1:2000
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
+<<<<<<< HEAD
+      xlims = (1,0), ylims = (0,1), zlims = (0,100),
+      palette = cgrad(:curl).colors,
+=======
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
+<<<<<<< HEAD
       color = :speed,
+=======
+      color = :deep,
+>>>>>>> 45a10eddd2b75e475ec06db632dc16b8e6b3a2ab
+>>>>>>> 20e1c1baa93ea7be66c801092838b70d1c245d32
       #lw = 3,
       #st = [:surface, :contourf],
       axis = true,
