@@ -38,4 +38,4 @@ anim = @animate for time_step = 1:15000
    )
 end every 10
 
-gif(anim, "./Figures/LeapFrog.gif", fps=30)
+gif(anim, "../Figures/LeapFrog.gif", fps=30)
