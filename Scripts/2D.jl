@@ -1,3 +1,5 @@
+ENV["PLOTS_TEST"] = "true"
+ENV["GKSwstype"] = "100"
 include("Imag.jl")
 include("Imag_2D.jl")
 include("Real_2D.jl")
@@ -52,13 +54,8 @@ anim = @animate for time_step = 1:2000
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
-<<<<<<< HEAD
-      xlims = (1,0), ylims = (0,1), zlims = (0,100),
-      palette = cgrad(:curl).colors,
-=======
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
       color = :deep,
->>>>>>> 45a10eddd2b75e475ec06db632dc16b8e6b3a2ab
       #lw = 3,
       #st = [:surface, :contourf],
       axis = true,
@@ -69,4 +66,4 @@ anim = @animate for time_step = 1:2000
    );
 end every 5
 
-gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+gif(anim, "../Figures/twoD_Leapfrog_wall.gif", fps=30)
