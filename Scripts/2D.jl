@@ -54,16 +54,8 @@ anim = @animate for time_step = 1:2000
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
-<<<<<<< HEAD
-      xlims = (0,1), ylims = (0,1), zlims = (0,100),
-      color = :deep,
-=======
-      xlims = (1,0), ylims = (0,1), zlims = (0,100),
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
       color = :speed,
->>>>>>> b3898cede7986f44331ca9fe57d9108e6a9c76bc
-      #lw = 3,
-      #st = [:surface, :contourf],
       axis = true,
       grid = true,
       cbar = true,
@@ -72,8 +64,4 @@ anim = @animate for time_step = 1:2000
    );
 end every 5
 
-<<<<<<< HEAD
-gif(anim, "../Figures/twoD_Leapfrog_wall.gif", fps=30)
-=======
 gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
->>>>>>> b3898cede7986f44331ca9fe57d9108e6a9c76bc
