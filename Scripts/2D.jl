@@ -54,7 +54,6 @@ anim = @animate for time_step = 1:2000
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
-      xlims = (1,0), ylims = (0,1), zlims = (0,100),
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
       color = :speed,
       #lw = 3,
@@ -67,4 +66,4 @@ anim = @animate for time_step = 1:2000
    );
 end every 5
 
-gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
+gif(anim, "./Figures/twoD_Leapfrog_cliff.gif", fps=30)
