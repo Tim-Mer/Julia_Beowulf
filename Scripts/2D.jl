@@ -1,8 +1,10 @@
-ENV["PLOTS_TEST"] = "true"
-ENV["GKSwstype"] = "100"
+using Plots
 include("Imag.jl")
 include("Imag_2D.jl")
 include("Real_2D.jl")
+function twoD()
+   ENV["PLOTS_TEST"] = "true"
+ENV["GKSwstype"] = "100"
 N = 200
 x_0 = fill(0.25, (N,N))
 y_0 = fill(0.5, (N,N))
@@ -27,7 +29,7 @@ end
 V = zeros(N,N)
 for i = 1:N
    for j = 100:200
-      V[i,j] = -1e3
+      V[i,j] = 1e3
    end
 end
 # Create a 2D potential wall
@@ -41,23 +43,21 @@ I_initial = imag(psi_z)
 I_current = I_initial
 R_current = R_initial
 I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
-using Plots
+
 anim = @animate for time_step = 1:2000
-   global R_current, I_current, N, delta_t, delta_x, V, prob_density
+   #global R_current, I_current, N, delta_t, delta_x, V, prob_density
    R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V)
    R_current = R_next
    I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
    prob_density = R_current.^2 + I_next.*I_current
    I_current = I_next
    surface(x[1,:],y[:,1], prob_density,
-      title = "Probability density function (cliff)",
+      title = "Probability density function (wall)",
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
       color = :speed,
-      #lw = 3,
-      #st = [:surface, :contourf],
       axis = true,
       grid = true,
       cbar = true,
@@ -65,5 +65,10 @@ anim = @animate for time_step = 1:2000
       show = false
    );
 end every 5
+gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+return 0
+end
 
-gif(anim, "./Figures/twoD_Leapfrog_cliff.gif", fps=30)
+@time twoD()
+
+#gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
