@@ -33,7 +33,8 @@ anim = @animate for time_step = 1:15000
    xlabel = "x",
    ylabel = "Probability density",
    ylims = (0,200),
-   legend = false
+   legend = false,
+   show = false
    )
 end every 10
 
