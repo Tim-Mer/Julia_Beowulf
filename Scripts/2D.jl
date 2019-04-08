@@ -1,10 +1,8 @@
-using Plots
+ENV["PLOTS_TEST"] = "true"
+ENV["GKSwstype"] = "100"
 include("Imag.jl")
 include("Imag_2D.jl")
 include("Real_2D.jl")
-function twoD()
-   ENV["PLOTS_TEST"] = "true"
-ENV["GKSwstype"] = "100"
 N = 200
 x_0 = fill(0.25, (N,N))
 y_0 = fill(0.5, (N,N))
@@ -43,9 +41,9 @@ I_initial = imag(psi_z)
 I_current = I_initial
 R_current = R_initial
 I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
-
+using Plots
 anim = @animate for time_step = 1:2000
-   #global R_current, I_current, N, delta_t, delta_x, V, prob_density
+   global R_current, I_current, N, delta_t, delta_x, V, prob_density
    R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V)
    R_current = R_next
    I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
@@ -58,21 +56,14 @@ anim = @animate for time_step = 1:2000
       zlabel = "ps*psi",
       xlims = (0,1), ylims = (0,1), zlims = (0,100),
       color = :speed,
+      #lw = 3,
+      #st = [:surface, :contourf],
       axis = true,
       grid = true,
       cbar = true,
       legend = false,
       show = false
    );
-end every 10
-gif(anim, "./Figures/twoD_Leapfrog_cliff.gif", fps=30)
-return 0
-end
+end every 5
 
-@time twoD()
-
-<<<<<<< HEAD
 gif(anim, "./Figures/twoD_Leapfrog_cliff.gif", fps=30)
-=======
-#gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
->>>>>>> d470504f66d26964281945110853a9f72f34337d
