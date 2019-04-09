@@ -1,7 +1,9 @@
-ENV["PLOTS_TEST"] = "true"
-ENV["GKSwstype"] = "100"
+using Plots
 include("Real.jl")
 include("Imag.jl")
+function leapfrog()
+   ENV["PLOTS_TEST"] = "true"
+ENV["GKSwstype"] = "100"
 N = 1000
 x = collect(0:(1/(N-1)):1)
 x_0 = fill(0.4, N)
@@ -19,10 +21,9 @@ for i = 600:N
 end
 I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 
-using Plots
 # Do the leapfrog
 anim = @animate for time_step = 1:15000
-   global R_cur, I_cur
+   #global R_cur, I_cur
    R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
    R_cur = R_next
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
@@ -38,4 +39,8 @@ anim = @animate for time_step = 1:15000
    )
 end every 10
 
-gif(anim, "../Figures/LeapFrog.gif", fps=30)
+gif(anim, "./Figures/LeapFrog.gif", fps=30)
+return 0
+end
+
+@time leapfrog()
