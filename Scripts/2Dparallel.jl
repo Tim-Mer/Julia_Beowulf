@@ -1,3 +1,6 @@
+import MPI
+using Plots
+
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
    I_next = zeros(N,N)
    s=delta_t/(2*delta_x^2)
@@ -94,13 +97,11 @@ anim = @animate for time_step = 1:2000
       show = false
    );
 end every 5
-#gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
 return 0
 end
 
 
-using MPI
-using Plots
 @time twoD()
 
-#gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
+#gif(anim, "./Figures/twoD_Leapfrog_cliff.gif", fps=30)
