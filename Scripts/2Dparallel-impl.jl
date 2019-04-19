@@ -1,6 +1,4 @@
 using Plots
-ENV["PLOTS_TEST"] = "true"
-ENV["GKSwstype"] = "100"
 
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
    I_next = zeros(N,N)
@@ -36,6 +34,8 @@ function imag_psi(N, I_current, R_current, delta_t, delta_x, V)
 end
 
 function twoD()
+   ENV["PLOTS_TEST"] = "true"
+   ENV["GKSwstype"] = "100"
 N = 200
 x_0 = fill(0.25, (N,N))
 y_0 = fill(0.5, (N,N))
