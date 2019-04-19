@@ -19,10 +19,6 @@ V = fill(0.0, N)
 for i = 600:N
    V[i] = -1e6
 end
-L = fill(0.0, N)
-for i = 600:N
-   L[i] = 1e6
-end
 I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 
 # Do the leapfrog
@@ -41,7 +37,7 @@ anim = @animate for time_step = 1:15000
    legend = false,
    show = false
    )
-   plot!(x,L)
+   plot!(x,abs.(V))
 end every 10
 
 gif(anim, "./Figures/ExtraLeapFrogCliff.gif", fps=30)
