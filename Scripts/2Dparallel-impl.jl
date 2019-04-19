@@ -35,7 +35,7 @@ end
 
 function twoD()
    ENV["PLOTS_TEST"] = "true"
-   ENV["GKSwstype"] = "100"
+ENV["GKSwstype"] = "100"
 N = 200
 x_0 = fill(0.25, (N,N))
 y_0 = fill(0.5, (N,N))
@@ -96,7 +96,7 @@ anim = @animate for time_step = 1:2000
       show = false
    );
 end every 5
-gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+#gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
 return 0
 end
 
