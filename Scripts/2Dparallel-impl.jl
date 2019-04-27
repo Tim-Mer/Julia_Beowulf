@@ -101,3 +101,7 @@ return 0
 end
 
 #gif(anim, "./Figures/twoD_Leapfrog_cliff.gif", fps=30)
+
+
+# get rid of the plotting and save x, y and prob_density every loop
+# then in a program after adding them all together and plot then gif them
