@@ -2,24 +2,42 @@ using MPI
 using Plots
 
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
+   rank = MPI.Comm_rank(comm)
+   size = MPI.Comm_size(comm)
    I_next = zeros(N,N)
    s=delta_t/(2*delta_x^2)
-   for x = 2:N-1
-      for y = 2:N-1
+   for x = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+      if x < 2
+         x = x+2
+      end
+      for y = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+         if y < 2
+            y = y+2
+         end
          I_next[x,y]=I_current[x,y] +s*(R_current[x+1,y]-2*R_current[x,y]+R_current[x-1,y]+R_current[x,y+1]-2*R_current[x,y]+R_current[x,y-1])-delta_t*V[x,y].*R_current[x,y]
       end
    end
+   MPI.Barrier(comm)
    return I_next
 end
 
 function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
+   rank = MPI.Comm_rank(comm)
+   size = MPI.Comm_size(comm)
    R_next= zeros(N,N)
    s=delta_t/(2*delta_x^2)
-   for x = 2:N-1
-      for y = 2:N-1
+   for x = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+      if x < 2
+         x = x+2
+      end
+      for y = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+         if y < 2
+            y = y+2
+         end
          R_next[x,y] = R_current[x,y] - s*(I_current[x+1,y]-2*I_current[x,y]+I_current[x-1,y]+I_current[x,y+1]-2*I_current[x,y]+I_current[x,y-1])+delta_t*V[x,y].*I_current[x,y]
       end
    end
+   MPI.Barrier(comm)
    return R_next
 end
 
@@ -38,8 +56,7 @@ end
 function main()
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
-   n = 100
-   N = n*2
+   N = 200
    x_0 = fill(0.25, (N,N))
    y_0 = fill(0.5, (N,N))
    C = fill(10.0, (N,N))
@@ -62,7 +79,7 @@ function main()
    end
    V = zeros(N,N)
    for i = 1:N
-      for j = n:N
+      for j = convert(Int64, N/2):N
          V[i,j] = 1e3
       end
    end
