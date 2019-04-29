@@ -117,9 +117,9 @@ function main()
        );
     end every 5
 
-    if gethostname() == "masternode"
+   if MPI.Comm_rank(comm) == 0
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
-    end
+   end
     MPI.Finalize()
 end
 
