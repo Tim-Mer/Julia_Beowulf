@@ -6,11 +6,11 @@ function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    size = MPI.Comm_size(comm)
    I_next = zeros(N,N)
    s=delta_t/(2*delta_x^2)
-   for x = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+   for x = floor(((rank/size)*N)):floor(((rank/size)*N)+(N/size)-1)
       if x < 2
          x = x+2
       end
-      for y = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+      for y = floor(((rank/size)*N)):floor(((rank/size)*N)+(N/size)-1)
          if y < 2
             y = y+2
          end
@@ -26,11 +26,11 @@ function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
    size = MPI.Comm_size(comm)
    R_next= zeros(N,N)
    s=delta_t/(2*delta_x^2)
-   for x = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+   for x = floor(((rank/size)*N)):floor(((rank/size)*N)+(N/size)-1)
       if x < 2
          x = x+2
       end
-      for y = (((rank/size)*N)):(((rank/size)*N)+(N/size)-1)
+      for y = floor(((rank/size)*N)):floor(((rank/size)*N)+(N/size)-1)
          if y < 2
             y = y+2
          end
