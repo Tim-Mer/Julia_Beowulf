@@ -95,7 +95,7 @@ for time_step = 1:2
       legend = false,
       show = false
    );
-   savefig(plt, "./Figure/ParallelTest/1.png")
+   savefig(plt, "./Figures/ParallelTest/1.png")
 end
 #gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
 return 0
