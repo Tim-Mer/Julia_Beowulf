@@ -36,7 +36,8 @@ end
 
 
 function main()
-   N = 200
+   n = 100
+   N = n*2
    x_0 = fill(0.25, (N,N))
    y_0 = fill(0.5, (N,N))
    C = fill(10.0, (N,N))
@@ -59,7 +60,7 @@ function main()
    end
    V = zeros(N,N)
    for i = 1:N
-      for j = 100:200
+      for j = n:N
          V[i,j] = 1e3
       end
    end
