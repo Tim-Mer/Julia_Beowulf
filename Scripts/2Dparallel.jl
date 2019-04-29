@@ -119,8 +119,8 @@ function main()
 
     if gethostname() == "masternode"
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
-   end
-   MPI.Finalize()
+    end
+    MPI.Finalize()
 end
 
 main()
