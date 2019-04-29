@@ -99,8 +99,11 @@ function main()
           show = false
        );
     end every 5
-    MPI.Finalize()
-    #gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
+
+    if gethostname() == "masternode"
+      gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
+   end
+   MPI.Finalize()
 end
 
 main()
