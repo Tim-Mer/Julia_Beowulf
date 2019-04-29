@@ -36,6 +36,8 @@ end
 
 
 function main()
+   ENV["PLOTS_TEST"] = "true"
+   ENV["GKSwstype"] = "100"
    n = 100
    N = n*2
    x_0 = fill(0.25, (N,N))
