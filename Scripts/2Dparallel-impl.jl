@@ -75,7 +75,7 @@ I_current = I_initial
 R_current = R_initial
 I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
 
-anim = @animate for time_step = 1:2000
+for time_step = 1:2000
    #global R_current, I_current, N, delta_t, delta_x, V, prob_density
    R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V)
    R_current = R_next
@@ -95,8 +95,8 @@ anim = @animate for time_step = 1:2000
       legend = false,
       show = false
    );
-end every 5
-gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+end
+#gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
 return 0
 end
 

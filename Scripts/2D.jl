@@ -5,7 +5,7 @@ include("Real_2D.jl")
 function twoD()
    ENV["PLOTS_TEST"] = "true"
 ENV["GKSwstype"] = "100"
-N = 200
+N = 1000
 x_0 = fill(0.25, (N,N))
 y_0 = fill(0.5, (N,N))
 C = fill(10.0, (N,N))
@@ -28,7 +28,7 @@ for i = 1:N
 end
 V = zeros(N,N)
 for i = 1:N
-   for j = 100:200
+   for j = 500:N
       V[i,j] = 1e3
    end
 end
@@ -64,8 +64,9 @@ anim = @animate for time_step = 1:2000
       legend = false,
       show = false
    );
+   #display(plt)
 end every 5
-gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
+gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
 return 0
 end
 
