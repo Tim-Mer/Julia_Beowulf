@@ -1,5 +1,5 @@
 using MPI
-using Distributed
+using Plots
 
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    I_next = zeros(N,N)
