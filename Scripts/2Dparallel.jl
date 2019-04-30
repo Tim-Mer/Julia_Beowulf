@@ -4,7 +4,7 @@ using Plots
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    rank = MPI.Comm_rank(comm)
    size = MPI.Comm_size(comm)
-   println("Imag - Rank: ", rank, " Size: ", size)
+   println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
    I_next = zeros(N,N)
    s=delta_t/(2*delta_x^2)
    for x = convert(Int64, floor(((rank/size)*N))):convert(Int64, floor(((rank/size)*N)+(N/size)-1))
@@ -25,7 +25,7 @@ end
 function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
    rank = MPI.Comm_rank(comm)
    size = MPI.Comm_size(comm)
-   println("Real - Rank: ", rank, " Size: ", size)
+   println("Real - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
    R_next= zeros(N,N)
    s=delta_t/(2*delta_x^2)
    for x = convert(Int64, floor(((rank/size)*N))):convert(Int64, floor(((rank/size)*N)+(N/size)-1))
@@ -113,22 +113,20 @@ function main()
          prob_density = R_current.^2 + I_next.*I_current
          I_current = I_next
       end
-      if MPI.Comm_rank(comm) == 0
-         surface(x[1,:],y[:,1], prob_density,
-            title = "Probability density function (wall)",
-            xlabel = "x",
-            ylabel = "y",
-            zlabel = "ps*psi",
-            xlims = (0,1), ylims = (0,1), zlims = (0,100),
-            color = :speed,
-            axis = true,
-            grid = true,
-            cbar = true,
-            legend = false,
-            show = false
-            );
-         end
-    end every 5
+      surface(x[1,:],y[:,1], prob_density,
+         title = "Probability density function (wall)",
+         xlabel = "x",
+         ylabel = "y",
+         zlabel = "ps*psi",
+         xlims = (0,1), ylims = (0,1), zlims = (0,100),
+         color = :speed,
+         axis = true,
+         grid = true,
+         cbar = true,
+         legend = false,
+         show = false
+         );
+      end every 5
 
     if MPI.Comm_rank(comm) == 0
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
