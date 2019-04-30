@@ -99,7 +99,7 @@ function main()
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
    MPI.Init()
    comm = MPI.COMM_WORLD
-   println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm))")
+   println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm)) name $(gethostname())")
    MPI.Barrier(comm)
    anim = @animate for time_step = 1:50
       if MPI.Comm_rank(comm) == 0
