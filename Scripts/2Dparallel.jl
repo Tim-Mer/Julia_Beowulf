@@ -98,7 +98,6 @@ function main()
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm))")
    MPI.Barrier(comm)
    anim = @animate for time_step = 1:20
-      global prob_density
       if MPI.Comm_rank(comm) == 0
          println("Time Step: ", time_step)
       end
@@ -110,8 +109,8 @@ function main()
       end
       I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
       MPI.Barrier(comm)
+      prob_density = R_current.^2 + I_next.*I_current
       if MPI.Comm_rank(comm) == 0
-         prob_density = R_current.^2 + I_next.*I_current
          I_current = I_next
       end
       surface(x[1,:],y[:,1], prob_density,
