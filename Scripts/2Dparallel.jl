@@ -5,7 +5,7 @@ function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    I_next = zeros(N,N)
    println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
    s=delta_t/(2*delta_x^2)
-   for x = 2:N-1 #convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
+   for x = convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
       if x < 2
          x = x+2
       end
@@ -19,7 +19,7 @@ function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
          #MPI.Barrier(comm)
       end
    end
-   #MPI.Barrier(comm)
+   MPI.Barrier(comm)
    #MPI.Allgather(I_next, comm)
    return I_next
 end
@@ -28,7 +28,7 @@ function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
    println("Real - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
    R_next= zeros(N,N)
    s=delta_t/(2*delta_x^2)
-   for x = 2:N-1 #convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
+   for x = convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
       if x < 2
          x = x+2
       end
@@ -38,11 +38,9 @@ function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
          end
          R_next[x,y] = R_current[x,y] - s*(I_current[x+1,y]-2*I_current[x,y]+I_current[x-1,y]+I_current[x,y+1]-2*I_current[x,y]+I_current[x,y-1])+delta_t*V[x,y].*I_current[x,y]
          #MPI.Barrier(comm)
-         #MPI.Allgather(R_next, comm)
-         #MPI.Barrier(comm)
       end
    end
-   #MPI.Barrier(comm)
+   MPI.Barrier(comm)
    #MPI.Allgather(R_next, comm)
    return R_next
 end
