@@ -4,6 +4,7 @@ using Plots
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    rank = MPI.Comm_rank(comm)
    size = MPI.Comm_size(comm)
+   println("Imag - Rank: ", rank, " Size: ", size)
    I_next = zeros(N,N)
    s=delta_t/(2*delta_x^2)
    for x = convert(Int64, floor(((rank/size)*N))):convert(Int64, floor(((rank/size)*N)+(N/size)-1))
@@ -24,6 +25,7 @@ end
 function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
    rank = MPI.Comm_rank(comm)
    size = MPI.Comm_size(comm)
+   println("Real - Rank: ", rank, " Size: ", size)
    R_next= zeros(N,N)
    s=delta_t/(2*delta_x^2)
    for x = convert(Int64, floor(((rank/size)*N))):convert(Int64, floor(((rank/size)*N)+(N/size)-1))
@@ -94,9 +96,9 @@ function main()
 
     MPI.Init()
     comm = MPI.COMM_WORLD
-
+if MPI.Comm_rank(comm) == 0
     anim = @animate for time_step = 1:20
-      println(time_step)
+      println("Time Step: ", time_step)
        #global R_current, I_current, N, delta_t, delta_x, V, prob_density
        R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
        R_current = R_next
@@ -118,7 +120,7 @@ function main()
        );
     end every 5
 
-   if MPI.Comm_rank(comm) == 0
+
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
    end
     MPI.Finalize()
