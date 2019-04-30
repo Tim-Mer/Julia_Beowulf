@@ -62,9 +62,9 @@ end
 function main()
    MPI.Init()
    comm = MPI.COMM_WORLD
-   if MPI.Comm_rank(comm) == 0
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
+   if MPI.Comm_rank(comm) == 0
    N = 200
    x_0 = fill(0.25, (N,N))
    y_0 = fill(0.5, (N,N))
