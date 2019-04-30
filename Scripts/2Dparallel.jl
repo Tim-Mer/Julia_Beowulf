@@ -60,6 +60,9 @@ end
 
 
 function main()
+   MPI.Init()
+   comm = MPI.COMM_WORLD
+   if MPI.Comm_rank(comm) == 0
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
    N = 200
@@ -98,8 +101,6 @@ function main()
    R_current = R_initial
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
    println("Start MPI")
-   MPI.Init()
-   comm = MPI.COMM_WORLD
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm)) name $(gethostname())")
    MPI.Barrier(comm)
    anim = @animate for time_step = 1:50
@@ -120,6 +121,7 @@ function main()
       if MPI.Comm_rank(comm) == 0
          I_current = I_next
       end
+   end
       surface(x[1,:],y[:,1], prob_density,
          title = "Probability density function (wall)",
          xlabel = "x",
@@ -133,12 +135,12 @@ function main()
          legend = false,
          show = false
          );
-      end
       end every 5
 
     if MPI.Comm_rank(comm) == 0
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
     end
+end
     MPI.Finalize()
 end
 
