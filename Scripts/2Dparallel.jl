@@ -110,6 +110,7 @@ function main()
       I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
       MPI.Barrier(comm)
       if MPI.Comm_rank(comm) == 0
+         local prob_density
          prob_density = R_current.^2 + I_next.*I_current
          I_current = I_next
       end
