@@ -64,7 +64,6 @@ function main()
    comm = MPI.COMM_WORLD
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
-   if MPI.Comm_rank(comm) == 0
    N = 200
    x_0 = fill(0.25, (N,N))
    y_0 = fill(0.5, (N,N))
@@ -80,21 +79,18 @@ function main()
          x[i,j] = a[j]
       end
    end
-   MPI.Bcast!(x, comm)
    y = zeros(N,N)
    for i = 1:N
       for j = 1:N
          y[j,i] = a[j]
       end
    end
-   MPI.Bcast!(y, comm)
    V = zeros(N,N)
    for i = 1:N
       for j = convert(Int64, N/2):N
          V[i,j] = 1e3
       end
    end
-   MPI.Bcast!(V, comm)
    psi_stationary = C.*exp.((-(x-x_0).^2)./sigma_squared).*exp.((-(y-y_0).^2)./sigma_squared)
    plane_wave = exp.(1im*k_0*x) #+1im*k_0*y)
    psi_z = psi_stationary.*plane_wave
@@ -103,30 +99,17 @@ function main()
    I_current = I_initial
    R_current = R_initial
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
-   MPI.Bcast!(I_next, comm)
-   println("Start MPI")
-end
+   MPI.Barrier(comm)
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm)) name $(gethostname())")
    MPI.Barrier(comm)
    anim = @animate for time_step = 1:50
-      if MPI.Comm_rank(comm) == 0
-      if MPI.Comm_rank(comm) == 0
-         println("Time Step: ", time_step)
-      end
-      #MPI.Barrier(comm)
-      #global R_current, I_current, N, delta_t, delta_x, V, prob_density
       R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
-      #MPI.Barrier(comm)
-      if MPI.Comm_rank(comm) == 0
-         R_current = R_next
-      end
+      R_current = R_next
+      MPI.Barrier(comm)
       I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
-      #MPI.Barrier(comm)
+      MPI.Barrier(comm)
       prob_density = R_current.^2 + I_next.*I_current
-      if MPI.Comm_rank(comm) == 0
-         I_current = I_next
-      end
-   end
+      I_current = I_next
       surface(x[1,:],y[:,1], prob_density,
          title = "Probability density function (wall)",
          xlabel = "x",
