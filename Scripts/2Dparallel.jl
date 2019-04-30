@@ -98,7 +98,7 @@ function main()
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm))")
    MPI.Barrier(comm)
    anim = @animate for time_step = 1:20
-      local prob_density
+      global prob_density
       if MPI.Comm_rank(comm) == 0
          println("Time Step: ", time_step)
       end
