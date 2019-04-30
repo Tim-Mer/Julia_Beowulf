@@ -80,18 +80,21 @@ function main()
          x[i,j] = a[j]
       end
    end
+   MPI.Bcast!(x, comm)
    y = zeros(N,N)
    for i = 1:N
       for j = 1:N
          y[j,i] = a[j]
       end
    end
+   MPI.Bcast!(y, comm)
    V = zeros(N,N)
    for i = 1:N
       for j = convert(Int64, N/2):N
          V[i,j] = 1e3
       end
    end
+   MPI.Bcast!(V, comm)
    psi_stationary = C.*exp.((-(x-x_0).^2)./sigma_squared).*exp.((-(y-y_0).^2)./sigma_squared)
    plane_wave = exp.(1im*k_0*x) #+1im*k_0*y)
    psi_z = psi_stationary.*plane_wave
@@ -100,6 +103,7 @@ function main()
    I_current = I_initial
    R_current = R_initial
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
+   MPI.Bcast!(I_next, comm)
    println("Start MPI")
 end
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm)) name $(gethostname())")
