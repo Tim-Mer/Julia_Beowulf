@@ -101,8 +101,9 @@ function main()
    R_current = R_initial
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
    println("Start MPI")
+end
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm)) name $(gethostname())")
-   #MPI.Barrier(comm)
+   MPI.Barrier(comm)
    anim = @animate for time_step = 1:50
       if MPI.Comm_rank(comm) == 0
       if MPI.Comm_rank(comm) == 0
@@ -140,7 +141,6 @@ function main()
     if MPI.Comm_rank(comm) == 0
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
     end
-end
     MPI.Finalize()
 end
 
