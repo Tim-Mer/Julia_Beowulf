@@ -14,9 +14,6 @@ function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
             y = y+2
          end
          I_next[x,y]=I_current[x,y] +s*(R_current[x+1,y]-2*R_current[x,y]+R_current[x-1,y]+R_current[x,y+1]-2*R_current[x,y]+R_current[x,y-1])-delta_t*V[x,y].*R_current[x,y]
-         MPI.Barrier(comm)
-         MPI.Allgather(I_next, comm)
-         MPI.Barrier(comm)
       end
    end
    MPI.Barrier(comm)
@@ -37,9 +34,6 @@ function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
             y = y+2
          end
          R_next[x,y] = R_current[x,y] - s*(I_current[x+1,y]-2*I_current[x,y]+I_current[x-1,y]+I_current[x,y+1]-2*I_current[x,y]+I_current[x,y-1])+delta_t*V[x,y].*I_current[x,y]
-         MPI.Barrier(comm)
-         MPI.Allgather(R_next, comm)
-         MPI.Barrier(comm)
       end
    end
    MPI.Barrier(comm)
