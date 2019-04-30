@@ -2,13 +2,13 @@ using MPI
 using Plots
 
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
-   println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
    I_next = zeros(N,N)
    s=delta_t/(2*delta_x^2)
    for x = convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
       if x < 2
          x = x+2
       end
+      println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
       for y = 2:N-1
          if y < 2
             y = y+2
