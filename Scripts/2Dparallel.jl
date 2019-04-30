@@ -8,7 +8,7 @@ function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
       if x < 2
          x = x+2
       end
-      println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
+      println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm)) X: $(x)")
       for y = 2:N-1
          if y < 2
             y = y+2
