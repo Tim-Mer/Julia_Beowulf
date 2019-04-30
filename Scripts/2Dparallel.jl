@@ -99,6 +99,7 @@ function main()
       if MPI.Comm_rank(comm) == 0
          println("Time Step: ", time_step)
       end
+      MPI.Barrier(comm)
       #global R_current, I_current, N, delta_t, delta_x, V, prob_density
       R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
       MPI.Barrier(comm)
