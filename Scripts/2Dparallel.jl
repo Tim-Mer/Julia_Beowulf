@@ -93,38 +93,46 @@ function main()
    I_current = I_initial
    R_current = R_initial
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
-
-    MPI.Init()
-    comm = MPI.COMM_WORLD
-    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm))")
-    MPI.Barrier(comm)
-if MPI.Comm_rank(comm) == 0
-    anim = @animate for time_step = 1:20
-      println("Time Step: ", time_step)
-       #global R_current, I_current, N, delta_t, delta_x, V, prob_density
-       R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
-       R_current = R_next
-       I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
-       prob_density = R_current.^2 + I_next.*I_current
-       I_current = I_next
-       surface(x[1,:],y[:,1], prob_density,
-          title = "Probability density function (wall)",
-          xlabel = "x",
-          ylabel = "y",
-          zlabel = "ps*psi",
-          xlims = (0,1), ylims = (0,1), zlims = (0,100),
-          color = :speed,
-          axis = true,
-          grid = true,
-          cbar = true,
-          legend = false,
-          show = false
-       );
+   MPI.Init()
+   comm = MPI.COMM_WORLD
+   println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm))")
+   MPI.Barrier(comm)
+   anim = @animate for time_step = 1:20
+      if MPI.Comm_rank(comm) == 0
+         println("Time Step: ", time_step)
+      end
+      #global R_current, I_current, N, delta_t, delta_x, V, prob_density
+      R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
+      MPI.Barrier(comm)
+      if MPI.Comm_rank(comm) == 0
+         R_current = R_next
+      end
+      I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
+      MPI.Barrier(comm)
+      if MPI.Comm_rank(comm) == 0
+         prob_density = R_current.^2 + I_next.*I_current
+         I_current = I_next
+      end
+      if MPI.Comm_rank(comm) == 0
+         surface(x[1,:],y[:,1], prob_density,
+            title = "Probability density function (wall)",
+            xlabel = "x",
+            ylabel = "y",
+            zlabel = "ps*psi",
+            xlims = (0,1), ylims = (0,1), zlims = (0,100),
+            color = :speed,
+            axis = true,
+            grid = true,
+            cbar = true,
+            legend = false,
+            show = false
+            );
+         end
     end every 5
 
-
+    if MPI.Comm_rank(comm) == 0
       gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
-   end
+    end
     MPI.Finalize()
 end
 
