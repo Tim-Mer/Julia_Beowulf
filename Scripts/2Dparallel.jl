@@ -11,7 +11,7 @@ function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
       if x < 2
          x = x+2
       end
-      for y = convert(Int64, floor(((rank/size)*N))):convert(Int64, floor(((rank/size)*N)+(N/size)-1))
+      for y = 2:N-1
          if y < 2
             y = y+2
          end
@@ -32,7 +32,7 @@ function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
       if x < 2
          x = x+2
       end
-      for y = convert(Int64, floor(((rank/size)*N))):convert(Int64, floor(((rank/size)*N)+(N/size)-1))
+      for y = 2:N-1
          if y < 2
             y = y+2
          end
