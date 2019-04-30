@@ -95,7 +95,8 @@ function main()
     MPI.Init()
     comm = MPI.COMM_WORLD
 
-    anim = @animate for time_step = 1:2000
+    anim = @animate for time_step = 1:20
+      println(time_step)
        #global R_current, I_current, N, delta_t, delta_x, V, prob_density
        R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
        R_current = R_next
