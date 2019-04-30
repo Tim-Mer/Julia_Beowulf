@@ -99,7 +99,7 @@ function main()
    comm = MPI.COMM_WORLD
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm))")
    MPI.Barrier(comm)
-   anim = @animate for time_step = 1:20
+   anim = @animate for time_step = 1:50
       if MPI.Comm_rank(comm) == 0
          println("Time Step: ", time_step)
       end
