@@ -102,21 +102,21 @@ function main()
    I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
    println("Start MPI")
    println("Hello world, I am $(MPI.Comm_rank(comm)) of $(MPI.Comm_size(comm)) name $(gethostname())")
-   MPI.Barrier(comm)
+   #MPI.Barrier(comm)
    anim = @animate for time_step = 1:50
       if MPI.Comm_rank(comm) == 0
       if MPI.Comm_rank(comm) == 0
          println("Time Step: ", time_step)
       end
-      MPI.Barrier(comm)
+      #MPI.Barrier(comm)
       #global R_current, I_current, N, delta_t, delta_x, V, prob_density
       R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
-      MPI.Barrier(comm)
+      #MPI.Barrier(comm)
       if MPI.Comm_rank(comm) == 0
          R_current = R_next
       end
       I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
-      MPI.Barrier(comm)
+      #MPI.Barrier(comm)
       prob_density = R_current.^2 + I_next.*I_current
       if MPI.Comm_rank(comm) == 0
          I_current = I_next
