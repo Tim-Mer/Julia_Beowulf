@@ -3,17 +3,19 @@ using Plots
 
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    I_next = zeros(N,N)
+   println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm))")
    s=delta_t/(2*delta_x^2)
    for x = convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
       if x < 2
          x = x+2
       end
-      println("Imag - Rank: $(MPI.Comm_rank(comm)) Size: $(MPI.Comm_size(comm)) X: $(x)")
       for y = 2:N-1
          if y < 2
             y = y+2
          end
          I_next[x,y]=I_current[x,y] +s*(R_current[x+1,y]-2*R_current[x,y]+R_current[x-1,y]+R_current[x,y+1]-2*R_current[x,y]+R_current[x,y-1])-delta_t*V[x,y].*R_current[x,y]
+         MPI.Barrier(comm)
+         MPI.Allgather(I_next, comm)
       end
    end
    MPI.Barrier(comm)
@@ -34,6 +36,8 @@ function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
             y = y+2
          end
          R_next[x,y] = R_current[x,y] - s*(I_current[x+1,y]-2*I_current[x,y]+I_current[x-1,y]+I_current[x,y+1]-2*I_current[x,y]+I_current[x,y-1])+delta_t*V[x,y].*I_current[x,y]
+         MPI.Barrier(comm)
+         MPI.Allgather(R_next, comm)
       end
    end
    MPI.Barrier(comm)
