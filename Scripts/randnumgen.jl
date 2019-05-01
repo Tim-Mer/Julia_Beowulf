@@ -13,8 +13,8 @@ function random(N, comm)
             write(f, "$(randnum(r)) \n")
             if(MPI.Comm_rank(comm) == 0)
                 println(N)
-                length+=MPI.Comm_size(comm)
             end
+            length+=1
             MPI.Barrier(comm)
         end
     close(f)
