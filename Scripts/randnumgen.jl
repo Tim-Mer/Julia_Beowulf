@@ -14,7 +14,7 @@ function random(N, comm)
         MPI.Barrier(comm)
         append!(x, randnum(r, MPI.Comm_size(comm)))
         #write(f, "$(randnum(r)) \n")
-        len+=1
+        len+=MPI.Comm_size(comm)
     end
     if(MPI.Comm_rank(comm) == 0)
         println("Length x: $(length(x))")
