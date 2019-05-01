@@ -16,7 +16,6 @@ function random()
             end
             MPI.Barrier(comm)
         end
-    end
     close(f)
 end
 
