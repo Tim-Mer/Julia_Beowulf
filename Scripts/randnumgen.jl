@@ -8,13 +8,13 @@ end
 function random(N, comm)
     r = MT19937()
     x = zeros(0)
-    length = 1
+    len = 1
     #f = open("./Files/randnum.txt", "w")
-    while length < N
+    while len < N
         MPI.Barrier(comm)
         append!(x, randnum(r, MPI.Comm_size(comm)))
         #write(f, "$(randnum(r)) \n")
-        length+=1
+        len+=1
     end
     if(MPI.Comm_rank(comm) == 0)
         println("Length x: $(length(x))")
