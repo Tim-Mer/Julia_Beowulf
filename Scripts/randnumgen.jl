@@ -8,8 +8,8 @@ end
 function random()
     r = MT19937()
     length = 0
+    f = open("./Files/randnum.txt", "w")
         while length < 40
-            f = open("./Files/randnum.txt", "w")
             write(f, "$(randnum(r)) \n")
             if(MPI.Comm_rank(comm) == 0)
                 length+=MPI.Comm_size(comm)
@@ -17,6 +17,7 @@ function random()
             MPI.Barrier(comm)
         end
     end
+    close(f)
 end
 
 function main()
