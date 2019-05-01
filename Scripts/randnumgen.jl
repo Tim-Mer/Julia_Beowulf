@@ -1,8 +1,8 @@
 using RandomNumbers.MersenneTwisters
 using MPI
 
-function randnum(r)
-    return rand(r, Float64, 1)
+function randnum(r, n)
+    return rand(r, Float64, n)
 end
 
 function random(N, comm)
@@ -12,7 +12,7 @@ function random(N, comm)
     #f = open("./Files/randnum.txt", "w")
         while length < N
             MPI.Barrier(comm)
-            append!(x, randnum(r))
+            append!(x, randnum(r, MPI.Comm_size(comm)))
             #write(f, "$(randnum(r)) \n")
             length+=1
         end
