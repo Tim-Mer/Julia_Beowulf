@@ -7,11 +7,12 @@ end
 
 function random(N, comm)
     r = MT19937()
+    x = Vector{Float64}
     length = 1
     #f = open("./Files/randnum.txt", "w")
         while length < N
             MPI.Barrier(comm)
-            x =+ randnum(r)
+            append!(x, randnum(r))
             #write(f, "$(randnum(r)) \n")
             length+=1
         end
@@ -28,7 +29,7 @@ function main()
         println("Starting random number generation of $N random numbers!")
     end
     MPI.Barrier(comm)
-    random(N, comm)
+    random(N,  comm)
 
     MPI.Finalize()
 end
