@@ -10,13 +10,16 @@ function random(N, comm)
     x = zeros(0)
     length = 1
     #f = open("./Files/randnum.txt", "w")
-        while length < N
-            MPI.Barrier(comm)
-            append!(x, randnum(r, MPI.Comm_size(comm)))
-            #write(f, "$(randnum(r)) \n")
-            length+=1
-        end
-    println("Length x: $(length(x))")
+    while length < N
+        MPI.Barrier(comm)
+        append!(x, randnum(r, MPI.Comm_size(comm)))
+        #write(f, "$(randnum(r)) \n")
+        length+=1
+    end
+    if(MPI.Comm_rank(comm) == 0)
+        println("Length x: $(length(x))")
+    end
+    MPI.Barrier(comm)
     #close(f)
 end
 
@@ -30,7 +33,7 @@ function main()
         println("Starting random number generation of $N random numbers!")
     end
     MPI.Barrier(comm)
-    random(N,  comm)
+    random(N, comm)
 
     MPI.Finalize()
 end
