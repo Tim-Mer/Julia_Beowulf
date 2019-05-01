@@ -20,7 +20,7 @@ function main()
 end
 
 MPI.Init()
-comm = MPI.COMM_WORLD
+comm = MPI.COMM_WORLD()
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.txt")
     rm("./Files/randnum.txt")
