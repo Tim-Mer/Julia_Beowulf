@@ -96,6 +96,7 @@ function main()
       MPI.Barrier(comm)
       I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
       MPI.Barrier(comm)
+      println("prob_density")
       prob_density = R_current.^2 + I_next.*I_current
       I_current = I_next
       surface(x[1,:],y[:,1], prob_density,
