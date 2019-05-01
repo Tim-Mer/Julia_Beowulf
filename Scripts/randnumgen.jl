@@ -10,9 +10,9 @@ function random(N, comm)
     length = 1
     f = open("./Files/randnum.txt", "w")
         while length < N
+            MPI.Barrier(comm)
             write(f, "$(randnum(r)) \n")
             length+=1
-            MPI.Barrier(comm)
         end
     close(f)
 end
