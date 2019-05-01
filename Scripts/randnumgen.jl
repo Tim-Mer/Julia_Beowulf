@@ -13,7 +13,7 @@ function random(N, comm)
             MPI.Barrier(comm)
             write(f, "$(randnum(r)) \n")
             if(MPI.Comm_rank(comm) == 0)
-                println(N)
+                println(length)
             end
             length+=1
         end
