@@ -18,6 +18,7 @@ function random()
         end
     end
 end
+
 function main()
     MPI.Init()
     comm = MPI.COMM_WORLD
