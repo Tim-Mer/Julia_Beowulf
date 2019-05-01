@@ -23,7 +23,7 @@ end
 function main()
     MPI.Init()
     comm = MPI.COMM_WORLD
-    N = 200000000
+    N = 200#000000
     if(MPI.Comm_rank(comm) == 0)
         #touch("./Files/randnum.txt")
         #rm("./Files/randnum.txt")
