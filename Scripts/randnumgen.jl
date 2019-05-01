@@ -12,7 +12,8 @@ function random(N, comm)
     #f = open("./Files/randnum.txt", "w")
     while len < N
         MPI.Barrier(comm)
-        append!(x, randnum(r, MPI.Comm_size(comm)))
+        y = randnum(r, MPI.Comm_size(comm))
+        append!(x, MPI.Gather(y, 0, comm))
         #write(f, "$(randnum(r)) \n")
         len+=MPI.Comm_size(comm)
     end
