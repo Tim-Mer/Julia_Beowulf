@@ -16,6 +16,7 @@ function random(N, comm)
             #write(f, "$(randnum(r)) \n")
             length+=1
         end
+    println("Length x: $(length(x))")
     #close(f)
 end
 
