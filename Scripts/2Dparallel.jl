@@ -3,14 +3,11 @@ using Plots
 
 function imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V, comm)
    I_next = zeros(N,N)
-   n = convert(Int64, (MPI.Comm_size(comm)/N))
+   n = convert(Int64, floor(MPI.Comm_size(comm)/N))
    MPI.Scatter(I_next, n, 0, comm)
    s=delta_t/(2*delta_x^2)
-   for x = convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
-      if x < 2
-         x = x+2
-      end
-      for y = 2:N-1
+   for x = 2:n-1 #convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
+      for y = 2:n-1
          I_next[x,y]=I_current[x,y] +s*(R_current[x+1,y]-2*R_current[x,y]+R_current[x-1,y]+R_current[x,y+1]-2*R_current[x,y]+R_current[x,y-1])-delta_t*V[x,y].*R_current[x,y]
       end
    end
@@ -23,11 +20,11 @@ end
 
 function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
    R_next= zeros(N,N)
-   n = convert(Int64, (N/MPI.Comm_size(comm)))
+   n = convert(Int64, floor(N/MPI.Comm_size(comm)))
    MPI.Scatter(R_next, n, 0, comm)
    s=delta_t/(2*delta_x^2)
    for x = 2:n-1 #convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
-      for y = 2:N-1
+      for y = 2:n-1
          R_next[x,y] = R_current[x,y] - s*(I_current[x+1,y]-2*I_current[x,y]+I_current[x-1,y]+I_current[x,y+1]-2*I_current[x,y]+I_current[x,y-1])+delta_t*V[x,y].*I_current[x,y]
       end
    end
@@ -55,7 +52,7 @@ function main()
    comm = MPI.COMM_WORLD
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
-   N = 200
+   N = 240
    x_0 = fill(0.25, (N,N))
    y_0 = fill(0.5, (N,N))
    C = fill(10.0, (N,N))
