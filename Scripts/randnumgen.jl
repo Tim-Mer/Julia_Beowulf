@@ -27,6 +27,7 @@ function main()
         rm("./Files/randnum.txt")
     end
     MPI.Barrier(comm)
+    random()
 
     MPI.Finalize()
 end
