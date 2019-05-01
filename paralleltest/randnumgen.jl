@@ -5,7 +5,7 @@ function randnum(r)
     return rand(r, Float64, 1)
 end
 
-function main()
+function random()
     r = MT19937()
     length = 0
     f = open("./Files/randnum.txt", "w")
@@ -18,14 +18,16 @@ function main()
         end
     end
 end
+function main()
+    MPI.Init()
+    comm = MPI.COMM_WORLD
+    if(MPI.Comm_rank(comm) == 0)
+        touch("./Files/randnum.txt")
+        rm("./Files/randnum.txt")
+    end
+    MPI.Barrier(comm)
 
-MPI.Init()
-comm = MPI.COMM_WORLD()
-if(MPI.Comm_rank(comm) == 0)
-    touch("./Files/randnum.txt")
-    rm("./Files/randnum.txt")
+    MPI.Finalize()
 end
-MPI.Barrier(comm)
-@time main()
 
-MPI.Finalize()
+main()
