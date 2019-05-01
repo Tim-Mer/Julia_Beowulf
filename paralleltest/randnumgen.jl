@@ -8,11 +8,13 @@ end
 function main()
     r = MT19937()
     length = 0
-    open("./Files/randnum.txt", "w") do f
+    f = open("./Files/randnum.txt", "w")
         while length < 40
             write(f, "$(randnum(r)) \n")
+            if(MPI.Comm_rank(comm) == 0)
+                length+=MPI.Comm_size(comm)
+            end
             MPI.Barrier(comm)
-            length+=1
         end
     end
 end
