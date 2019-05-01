@@ -7,7 +7,7 @@ end
 function main()
     r = MT19937()
     open("./Files/randnum.txt", "w") do f
-        for i = 1:1000000
+        for i = 1:100000000000
             write(f, "$(randnum(r)) \n")
         end
     end
