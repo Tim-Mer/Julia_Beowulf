@@ -11,7 +11,7 @@ function random(N, comm)
     #f = open("./Files/randnum.txt", "w")
         while length < N
             MPI.Barrier(comm)
-            x = rand(r, Float64, N)
+            x =+ randnum(r)
             #write(f, "$(randnum(r)) \n")
             length+=1
         end
