@@ -23,7 +23,7 @@ end
 
 function real_psi_2D(N, R_current, I_current, delta_t, delta_x, V, comm)
    R_next= zeros(N,N)
-   n = convert(Int64, (MPI.Comm_size(comm)/N))
+   n = convert(Int64, (N/MPI.Comm_size(comm)))
    MPI.Scatter(R_next, n, 0, comm)
    s=delta_t/(2*delta_x^2)
    for x = 2:n-1 #convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N))):convert(Int64, floor(((MPI.Comm_rank(comm)/MPI.Comm_size(comm))*N)+(N/MPI.Comm_size(comm))-1))
