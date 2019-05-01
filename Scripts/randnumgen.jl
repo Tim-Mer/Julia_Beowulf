@@ -7,7 +7,7 @@ end
 
 function random(N, comm)
     r = MT19937()
-    length = 0
+    length = 1
     f = open("./Files/randnum.txt", "w")
         while length < N
             MPI.Barrier(comm)
