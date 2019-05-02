@@ -40,18 +40,20 @@ MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
 offset = N*(rank/size)
 dest = 0
-nb_elms = 1
+nb_elms = 2
 no_assert = 0
-for i = 0:(convert(Int64, N/size)-1)
+#function test()
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put(randnum(r), nb_elms, dest, convert(Int64, offset+i), win)
+    MPI.Put([randnum(r) randnum(r)], nb_elms, dest, offset, win)
+    MPI.Win_unlock(dest, win)
+    MPI.Barrier(comm)
+#end
+#@time test()
+MPI.Barrier(comm)
+if rank == dest
+    MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
+    println("I was sent this: ", shared')
     MPI.Win_unlock(dest, win)
 end
-MPI.Barrier(comm)
-#if rank == dest
-#    MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
-#    println("I was sent this: ", shared')
-#    MPI.Win_unlock(dest, win)
-#end
 #random(N, comm)
 MPI.Finalize()
