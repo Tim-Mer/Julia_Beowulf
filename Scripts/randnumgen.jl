@@ -42,11 +42,14 @@ offset = N*(rank/size)
 dest = 0
 nb_elms = 1
 no_assert = 0
-for i = 0:(convert(Int64, N/size))
-    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put([Float64(randnum(r))], nb_elms, dest, convert(Int64, offset+i), win)
-    MPI.Win_unlock(dest, win)
+function test()
+    for i = 0:(convert(Int64, N/size))
+        MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
+        MPI.Put([Float64(randnum(r))], nb_elms, dest, convert(Int64, offset+i), win)
+        MPI.Win_unlock(dest, win)
+    end
 end
+@time test()
 MPI.Barrier(comm)
 if rank == dest
     MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
