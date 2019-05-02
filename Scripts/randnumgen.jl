@@ -23,34 +23,29 @@ function random(N, comm)
     close(fo)
 end
 
-function main()
-    MPI.Init()
-    comm = MPI.COMM_WORLD
-    rank = MPI.Comm_rank(comm)
-    N = 24#00#000000
-    if(MPI.Comm_rank(comm) == 0)
-        touch("./Files/randnum.log")
-        rm("./Files/randnum.log")
-        println("Starting random number generation of $N random numbers!")
-    end
-    shared = zeros(N)
-    win = MPI.Win()
-    MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
-    MPI.Barrier(comm)
-    offset = rank
-    dest = 0
-    nb_elms = 1
-    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
-    MPI.Win_unlock(dest, win)
-    if rank == dest
-        MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
-        println("I was sent this: ", shared')
-        MPI.Win_unlock(dest, win)
-    end
-    #random(N, comm)
-
-    MPI.Finalize()
+MPI.Init()
+comm = MPI.COMM_WORLD
+rank = MPI.Comm_rank(comm)
+N = 24#00#000000
+if(MPI.Comm_rank(comm) == 0)
+    touch("./Files/randnum.log")
+    rm("./Files/randnum.log")
+    println("Starting random number generation of $N random numbers!")
 end
-
-main()
+shared = zeros(N)
+win = MPI.Win()
+MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
+MPI.Barrier(comm)
+offset = rank
+dest = 0
+nb_elms = 1
+MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
+MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
+MPI.Win_unlock(dest, win)
+if rank == dest
+    MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
+    println("I was sent this: ", shared')
+    MPI.Win_unlock(dest, win)
+end
+#random(N, comm)
+MPI.Finalize()
