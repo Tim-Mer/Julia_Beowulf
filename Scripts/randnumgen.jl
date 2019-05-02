@@ -6,28 +6,11 @@ function randnum(r)
     return rand(r, Float64, 1)
 end
 
-function speed_test(r, N) where {T<:Number}
-    A = Array{T}(undef, N)
-    rand!(r, A)
-    elapsed = @elapsed rand!(r, A)
-    elapsed * N / N * 8 / sizeof(T)
-end
-
-function random(N, comm)
-    r = MT19937()
-    fo = open("$(MPI.Comm_size(comm)).log")
-    redirect_stdout(fo)
-    speed = speed_test(r, N)
-    @printf "Speed Test: %.3f ns/64 bits\n" speed
-    flush(fo)
-    close(fo)
-end
-
 MPI.Init()
 const comm = MPI.COMM_WORLD
 const rank = MPI.Comm_rank(comm)
 const size = MPI.Comm_size(comm)
-N = convert(Int64, 24*1000)
+N = convert(Int64, 24*100000)
 r = MT19937()
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.log")
