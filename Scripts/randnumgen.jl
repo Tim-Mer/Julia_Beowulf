@@ -14,10 +14,9 @@ function random(N, comm)
     #f = open("./Files/randnum.txt", "w")
     while len < n
         MPI.Barrier(comm)
-        y = randnum(r, 1)
-        append!(x, MPI.Gather(y, 0, comm))
+        randnum(r, 1)
         #write(f, "$(randnum(r)) \n")
-        len+=MPI.Comm_size(comm)
+        len+=1
     end
     if(MPI.Comm_rank(comm) == 0)
         println("Length x: $(length(x))")

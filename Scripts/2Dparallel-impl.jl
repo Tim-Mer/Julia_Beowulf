@@ -75,27 +75,13 @@ I_current = I_initial
 R_current = R_initial
 I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
 
-for time_step = 1:2
+for time_step = 1:2000
    #global R_current, I_current, N, delta_t, delta_x, V, prob_density
    R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V)
    R_current = R_next
    I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
    prob_density = R_current.^2 + I_next.*I_current
    I_current = I_next
-   plt = surface(x[1,:],y[:,1], prob_density,
-      title = "Probability density function (wall)",
-      xlabel = "x",
-      ylabel = "y",
-      zlabel = "ps*psi",
-      xlims = (0,1), ylims = (0,1), zlims = (0,100),
-      color = :speed,
-      axis = true,
-      grid = true,
-      cbar = true,
-      legend = false,
-      show = false
-   );
-   savefig(plt, "./Figures/ParallelTest/1.png")
 end
 #gif(anim, "./Figures/twoD_Leapfrog_wall.gif", fps=30)
 return 0
