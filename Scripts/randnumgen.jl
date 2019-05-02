@@ -27,7 +27,7 @@ function main()
     MPI.Init()
     comm = MPI.COMM_WORLD
     rank = MPI.Comm_rank(comm)
-    N = 200#000000
+    N = 24#00#000000
     if(MPI.Comm_rank(comm) == 0)
         touch("./Files/randnum.log")
         rm("./Files/randnum.log")
@@ -40,7 +40,7 @@ function main()
     offset = rank
     dest = 0
     nb_elms = 1
-    MPI.Win_lock(MPI.LOCK_EXCLUSIVE,dest, no_assert, win)
+    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
     MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
     MPI.Win_unlock(dest, win)
     if rank == dest
