@@ -38,7 +38,7 @@ shared = zeros(N)
 win = MPI.Win()
 MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
-offset = N*(rank/size)
+offset = convert(Int64, N*(rank/size))
 dest = 0
 nb_elms = 2
 no_assert = 0
