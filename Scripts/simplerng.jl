@@ -18,12 +18,15 @@ function main(comm, n)
         randnum(r)
     end
     MPI.Barrier(comm)
-
 end
 
 MPI.Init()
 comm = MPI.COMM_WORLD
 n = 100000000
-time = @time main(comm, n)
+if MPI.Comm_rank(comm) == 0
+    @time main(comm, n)
+else
+    main(comm, n)
+end
 println(time)
 MPI.Finalize()
