@@ -1,0 +1,10 @@
+echo 24
+mpirun --hostfile /home/mpiuser/hosts -np 24 julia ./Scripts/simplerng.jl
+echo 16
+mpirun --hostfile /home/mpiuser/hosts -np 16 julia ./Scripts/simplerng.jl
+echo 8
+mpirun --hostfile /home/mpiuser/hosts -np 8 julia ./Scripts/simplerng.jl
+echo 4
+mpirun --hostfile /home/mpiuser/hosts -np 4 julia ./Scripts/simplerng.jl
+echo 2
+mpirun --hostfile /home/mpiuser/hosts -np 2 julia ./Scripts/simplerng.jl
