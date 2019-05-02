@@ -22,7 +22,7 @@ end
 
 MPI.Init()
 comm = MPI.COMM_WORLD
-n = 100000000
+n = 1e8
 if MPI.Comm_rank(comm) == 0
     @time main(comm, n)
 else
