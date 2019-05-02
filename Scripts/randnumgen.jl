@@ -27,7 +27,7 @@ MPI.Init()
 const comm = MPI.COMM_WORLD
 const rank = MPI.Comm_rank(comm)
 const size = MPI.Comm_size(comm)
-N = convert(Int64, 24*4200)
+N = convert(Int64, 24*100000)
 r = MT19937()
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.log")
@@ -42,7 +42,7 @@ offset = N*(rank/size)
 dest = 0
 nb_elms = 1
 no_assert = 0
-for i = 0:(convert(Int64, N/size))
+for i = 0:(convert(Int64, N/size)-1)
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
     MPI.Put(randnum(r), nb_elms, dest, convert(Int64, offset+i), win)
     MPI.Win_unlock(dest, win)
