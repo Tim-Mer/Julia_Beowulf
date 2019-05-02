@@ -39,6 +39,7 @@ MPI.Put(A, length(A), dest, offset, win)
 MPI.Win_unlock(dest, win)
 if rank == dest
     println("Length of A after: ", length(A))
+    println("Lenght of shared: ", length(shared))
 end
 MPI.Barrier(comm)
 #end
