@@ -4,7 +4,7 @@ using RandomNumbers.MersenneTwisters
 function main()
     #MPI.Init()
     #comm = MPI.COMM_WORLD
-    const TEST_NAME = "Beowulf_Cluster"
+    TEST_NAME = "Beowulf_Cluster"
     r = MT19937()
     test_all(r, 10000)
     #MPI.Finalize()
