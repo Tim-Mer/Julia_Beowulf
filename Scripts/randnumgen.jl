@@ -43,10 +43,13 @@ dest = 0
 nb_elms = 2
 no_assert = 0
 #function test()
+for i = 0:(convert(Int64, N/size))
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    #A = Array(Float64, 1)
-    MPI.Put([1.0, 5.3], nb_elms, dest, offset, win)
+    A = zeros(0)
+    append!(A, randnum(r))
+    MPI.Put(A, length(A), dest, convert(Int64, offset+i), win)
     MPI.Win_unlock(dest, win)
+end
     MPI.Barrier(comm)
 #end
 #@time test()
