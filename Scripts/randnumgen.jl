@@ -24,8 +24,9 @@ function random(N, comm)
 end
 
 MPI.Init()
-comm = MPI.COMM_WORLD
-rank = MPI.Comm_rank(comm)
+const comm = MPI.COMM_WORLD
+const rank = MPI.Comm_rank(comm)
+const size = MPI.Comm_size(comm)
 N = 48#00#000000
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.log")
@@ -36,13 +37,15 @@ shared = zeros(N)
 win = MPI.Win()
 MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
-offset = rank
+offset = N*(rank/size)
 dest = 0
 nb_elms = 1
 no_assert = 0
-MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
-MPI.Win_unlock(dest, win)
+for offset rank:rank+1
+    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
+    MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
+    MPI.Win_unlock(dest, win)
+end
 MPI.Barrier(comm)
 if rank == dest
     MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
