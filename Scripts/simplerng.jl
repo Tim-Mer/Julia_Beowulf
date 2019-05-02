@@ -12,9 +12,10 @@ function main(comm, n)
     r = MT19937()
     if(rank == 0)
         println("Starting random number generation of $N random numbers!")
+        println("With each node computing $(convert(Int64, round(N/size))) random numbers!")
     end
     MPI.Barrier(comm)
-    for j = 1:(convert(Int64, N/size))
+    for j = 1:(convert(Int64, round(N/size)))
         randnum(r)
     end
     MPI.Barrier(comm)
