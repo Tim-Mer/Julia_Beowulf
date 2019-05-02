@@ -28,5 +28,4 @@ if MPI.Comm_rank(comm) == 0
 else
     main(comm, n)
 end
-println(time)
 MPI.Finalize()
