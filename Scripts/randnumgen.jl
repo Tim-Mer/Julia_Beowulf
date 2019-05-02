@@ -34,13 +34,13 @@ MPI.Barrier(comm)
 for j = 1:(convert(Int64, N/size))
     append!(A, randnum(r))
 end
-MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-MPI.Put(A, length(A), dest, offset, win)
-MPI.Win_unlock(dest, win)
-if rank == dest
-    println("Length of A after: ", length(A))
-    println("Lenght of shared: ", length(shared))
-end
+#MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
+#MPI.Put(A, length(A), dest, offset, win)
+#MPI.Win_unlock(dest, win)
+#if rank == dest
+    #println("Length of A after: ", length(A))
+    #println("Lenght of shared: ", length(shared))
+#end
 MPI.Barrier(comm)
 #end
 #@time test()
