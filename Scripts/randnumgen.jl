@@ -61,11 +61,11 @@ MPI.Barrier(comm)
 #end
 #@time test()
 MPI.Barrier(comm)
-if rank == dest
-    MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
-    println("I was sent this: ", shared')
-    println("It was length: ", length(shared))
-    MPI.Win_unlock(dest, win)
-end
+#if rank == dest
+#    MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
+#    println("I was sent this: ", shared')
+#    println("It was length: ", length(shared))
+#    MPI.Win_unlock(dest, win)
+#end
 #random(N, comm)
 MPI.Finalize()
