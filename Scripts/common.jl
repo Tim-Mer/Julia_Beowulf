@@ -36,7 +36,6 @@ function test_all(rng::Random.AbstractRNG, n)
     fo = open("$(TEST_NAME).log", "w")
     redirect_stdout(fo)
     println(TEST_NAME)
-    MPI.Barrier(comm)
     speed = speed_test(rng, n)
     @printf "Speed Test: %.3f ns/64 bits\n" speed
     flush(fo)
