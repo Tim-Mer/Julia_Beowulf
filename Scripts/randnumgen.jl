@@ -27,7 +27,7 @@ MPI.Init()
 const comm = MPI.COMM_WORLD
 const rank = MPI.Comm_rank(comm)
 const size = MPI.Comm_size(comm)
-N = convert(Int64, 24*100000)
+N = convert(Int64, 24*2)
 r = MT19937()
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.log")
