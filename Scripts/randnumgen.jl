@@ -40,7 +40,7 @@ MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
 offset = N*(rank/size)
 dest = 0
-nb_elms =
+nb_elms = 2
 no_assert = 0
 #function test()
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
