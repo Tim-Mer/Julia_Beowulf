@@ -9,7 +9,7 @@ MPI.Init()
 const comm = MPI.COMM_WORLD
 const rank = MPI.Comm_rank(comm)
 const size = MPI.Comm_size(comm)
-N = convert(Int64, 24*10000000)
+N = convert(Int64, 24*100000000)
 r = MT19937()
 if(rank == 0)
     println("Starting random number generation of $N random numbers!")
