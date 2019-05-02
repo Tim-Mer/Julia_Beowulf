@@ -40,11 +40,12 @@ MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
 offset = N*(rank/size)
 dest = 0
-nb_elms = 2
+nb_elms =
 no_assert = 0
 #function test()
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put([randnum(r), randnum(r)], nb_elms, dest, offset, win)
+    A = Array(Float64, 1)
+    MPI.Put([1.0 5.3], nb_elms, dest, offset, win)
     MPI.Win_unlock(dest, win)
     MPI.Barrier(comm)
 #end
