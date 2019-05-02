@@ -7,10 +7,12 @@ end
 
 function random(N, comm)
     r = MT19937()
-    x = zeros(0)
+    x = zeros(N)
+    n = convert(Int64, N/MPI.Comm_size(comm))
+    MPI.Scatter(x, n, 0, comm)
     len = 1
     #f = open("./Files/randnum.txt", "w")
-    while len < N
+    while len < n
         MPI.Barrier(comm)
         y = randnum(r, 1)
         append!(x, MPI.Gather(y, 0, comm))
