@@ -2,8 +2,8 @@ using RandomNumbers.MersenneTwisters
 using MPI
 import Printf: @printf
 
-function randnum(r, n)
-    return rand(r, Float64, n)
+function randnum(r)
+    return rand(r, Float64, 1)
 end
 
 function speed_test(r, N) where {T<:Number}
@@ -28,6 +28,7 @@ const comm = MPI.COMM_WORLD
 const rank = MPI.Comm_rank(comm)
 const size = MPI.Comm_size(comm)
 N = 48#00#000000
+r = MT19937()
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.log")
     rm("./Files/randnum.log")
@@ -43,7 +44,7 @@ nb_elms = 1
 no_assert = 0
 for i = 0:(convert(Int64, N/size))
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put([Float64(rank)], nb_elms, dest, convert(Int64, offset+i), win)
+    MPI.Put([Float64(randnum(r))], nb_elms, dest, convert(Int64, offset+i), win)
     MPI.Win_unlock(dest, win)
 end
 MPI.Barrier(comm)
