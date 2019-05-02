@@ -39,6 +39,7 @@ MPI.Barrier(comm)
 offset = rank
 dest = 0
 nb_elms = 1
+no_assert = 0
 MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
 MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
 MPI.Win_unlock(dest, win)
