@@ -41,9 +41,9 @@ offset = N*(rank/size)
 dest = 0
 nb_elms = 1
 no_assert = 0
-for offset = rank:rank+1
+for i = 0:1
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
+    MPI.Put([Float64(rank)], nb_elms, dest, offset+i, win)
     MPI.Win_unlock(dest, win)
 end
 MPI.Barrier(comm)
