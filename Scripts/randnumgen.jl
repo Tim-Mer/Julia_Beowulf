@@ -44,7 +44,7 @@ nb_elms = 2
 no_assert = 0
 #function test()
     MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
-    MPI.Put([randnum(r) randnum(r)], nb_elms, dest, offset, win)
+    MPI.Put([randnum(r), randnum(r)], nb_elms, dest, offset, win)
     MPI.Win_unlock(dest, win)
     MPI.Barrier(comm)
 #end
