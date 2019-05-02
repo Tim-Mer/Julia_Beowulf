@@ -26,7 +26,7 @@ end
 MPI.Init()
 comm = MPI.COMM_WORLD
 rank = MPI.Comm_rank(comm)
-N = 24#00#000000
+N = 48#00#000000
 if(MPI.Comm_rank(comm) == 0)
     touch("./Files/randnum.log")
     rm("./Files/randnum.log")
