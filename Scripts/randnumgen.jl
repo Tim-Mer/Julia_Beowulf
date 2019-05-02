@@ -43,6 +43,7 @@ no_assert = 0
 MPI.Win_lock(MPI.LOCK_EXCLUSIVE, dest, no_assert, win)
 MPI.Put([Float64(rank)], nb_elms, dest, offset, win)
 MPI.Win_unlock(dest, win)
+MPI.Barrier(comm)
 if rank == dest
     MPI.Win_lock(MPI.LOCK_SHARED, dest, no_assert, win)
     println("I was sent this: ", shared')
