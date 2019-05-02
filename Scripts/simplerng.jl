@@ -5,9 +5,7 @@ function randnum(r)
     return rand(r, Float64, 1)
 end
 
-function main(n)
-    MPI.Init()
-    comm = MPI.COMM_WORLD
+function main(comm, n)
     rank = MPI.Comm_rank(comm)
     size = MPI.Comm_size(comm)
     N = convert(Int64, 24*n)
@@ -20,7 +18,12 @@ function main(n)
         randnum(r)
     end
     MPI.Barrier(comm)
-    MPI.Finalize()
+
 end
+
+MPI.Init()
+comm = MPI.COMM_WORLD
 n = 100000000
-@time main(n)
+time = @time main(comm, n)
+println(time)
+MPI.Finalize()
