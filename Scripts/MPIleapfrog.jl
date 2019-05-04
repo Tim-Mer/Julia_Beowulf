@@ -40,7 +40,7 @@ function leapfrog(comm)
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 600:650
-      V[i] = (42000*rank)
+      V[i] = (exp.(rank/1.6))
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 
@@ -52,7 +52,7 @@ function leapfrog(comm)
       prob_density = R_cur.^2+I_next.*I_cur
       I_cur = I_next
       plot(x, prob_density,
-         title = "Wave packet against $(convert(Int64, V[600])) high wall",
+         title = "Wave packet against $(convert(Int64, round(V[600]))) high wall",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
@@ -61,7 +61,7 @@ function leapfrog(comm)
          )
       plot!(x,abs.(V))
    end every 20
-   gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, V[600]))_barrier.gif", fps=30)
+   gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier.gif", fps=30)
 end
 
 MPI.Init()
