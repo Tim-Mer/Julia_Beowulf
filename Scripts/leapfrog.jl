@@ -17,29 +17,38 @@ function leapfrog()
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 500:N
-      V[i] = -i*100
+      V[i] = 1e6
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 
    # Do the leapfrog
-   anim = @animate for time_step = 1:20000
+   #anim = @animate
+   for time_step = 1:20000
       #global R_cur, I_cur
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
       I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
       prob_density = R_cur.^2+I_next.*I_cur
       I_cur = I_next
-      plot(x, prob_density,
-         title = "Wave packet against ramp down",
-         xlabel = "x",
-         ylabel = "Probability density",
-         ylims = (0,200),
-         legend = false,
-         show = false
-         )
-      plot!(x,abs.(V))
-   end every 20
-   gif(anim, "./Figures/LeapFrog_ramp_down.gif", fps=30)
+      if time_step == 1
+         prob_density = before
+      end
+      if time_step == 20000
+         prob_density = after
+      end
+
+      #plot(x, prob_density,
+      #   title = "Wave packet against ramp down",
+      #   xlabel = "x",
+      #   ylabel = "Probability density",
+      #   ylims = (0,200),
+      #   legend = false,
+      #   show = false
+      #   )
+      #plot!(x,abs.(V))
+   end #every 20
+   println(before/after)
+   #gif(anim, "./Figures/LeapFrog_ramp_down.gif", fps=30)
 end
 
 @time leapfrog()
