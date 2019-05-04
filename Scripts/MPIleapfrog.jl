@@ -46,7 +46,6 @@ function leapfrog(comm)
 
    # Do the leapfrog
    anim = @animate for time_step = 1:20000
-      global R_cur, I_cur
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
       I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
