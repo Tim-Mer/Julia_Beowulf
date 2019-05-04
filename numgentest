@@ -1,10 +1,48 @@
 echo 24
 mpirun --hostfile /home/mpiuser/hosts -np 24 julia ./Scripts/simplerng.jl
+echo 23
+mpirun --hostfile /home/mpiuser/hosts -np 23 julia ./Scripts/simplerng.jl
+echo 22
+mpirun --hostfile /home/mpiuser/hosts -np 22 julia ./Scripts/simplerng.jl
+echo 21
+mpirun --hostfile /home/mpiuser/hosts -np 21 julia ./Scripts/simplerng.jl
+echo 20
+mpirun --hostfile /home/mpiuser/hosts -np 20 julia ./Scripts/simplerng.jl
+echo 19
+mpirun --hostfile /home/mpiuser/hosts -np 19 julia ./Scripts/simplerng.jl
+echo 18
+mpirun --hostfile /home/mpiuser/hosts -np 18 julia ./Scripts/simplerng.jl
+echo 17
+mpirun --hostfile /home/mpiuser/hosts -np 17 julia ./Scripts/simplerng.jl
 echo 16
 mpirun --hostfile /home/mpiuser/hosts -np 16 julia ./Scripts/simplerng.jl
+echo 15
+mpirun --hostfile /home/mpiuser/hosts -np 15 julia ./Scripts/simplerng.jl
+echo 14
+mpirun --hostfile /home/mpiuser/hosts -np 14 julia ./Scripts/simplerng.jl
+echo 13
+mpirun --hostfile /home/mpiuser/hosts -np 13 julia ./Scripts/simplerng.jl
+echo 12
+mpirun --hostfile /home/mpiuser/hosts -np 12 julia ./Scripts/simplerng.jl
+echo 11
+mpirun --hostfile /home/mpiuser/hosts -np 11 julia ./Scripts/simplerng.jl
+echo 10
+mpirun --hostfile /home/mpiuser/hosts -np 10 julia ./Scripts/simplerng.jl
+echo 9
+mpirun --hostfile /home/mpiuser/hosts -np 9 julia ./Scripts/simplerng.jl
 echo 8
 mpirun --hostfile /home/mpiuser/hosts -np 8 julia ./Scripts/simplerng.jl
+echo 7
+mpirun --hostfile /home/mpiuser/hosts -np 7 julia ./Scripts/simplerng.jl
+echo 6
+mpirun --hostfile /home/mpiuser/hosts -np 6 julia ./Scripts/simplerng.jl
+echo 5
+mpirun --hostfile /home/mpiuser/hosts -np 5 julia ./Scripts/simplerng.jl
 echo 4
 mpirun --hostfile /home/mpiuser/hosts -np 4 julia ./Scripts/simplerng.jl
+echo 3
+mpirun --hostfile /home/mpiuser/hosts -np 3 julia ./Scripts/simplerng.jl
 echo 2
 mpirun --hostfile /home/mpiuser/hosts -np 2 julia ./Scripts/simplerng.jl
+echo 1
+mpirun --hostfile /home/mpiuser/hosts -np 1 julia ./Scripts/simplerng.jl
