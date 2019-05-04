@@ -17,7 +17,7 @@ function leapfrog()
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 500:N
-      V[i] = i*100
+      V[i] = -i*100
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
 
@@ -30,7 +30,7 @@ function leapfrog()
       prob_density = R_cur.^2+I_next.*I_cur
       I_cur = I_next
       plot(x, prob_density,
-         title = "Wave packet against ramp",
+         title = "Wave packet against ramp down",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
@@ -39,7 +39,7 @@ function leapfrog()
          )
       plot!(x,abs.(V))
    end every 20
-   gif(anim, "./Figures/LeapFrog_ramp.gif", fps=30)
+   gif(anim, "./Figures/LeapFrog_ramp_down.gif", fps=30)
 end
 
 @time leapfrog()
