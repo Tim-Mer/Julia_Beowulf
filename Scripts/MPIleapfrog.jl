@@ -84,7 +84,7 @@ shared = zeros(MPI.Comm_size(comm)*2)
 win = MPI.Win()
 MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
-for width = 50:50:400
+for width = 0:25:200
    if MPI.Comm_rank(comm) == 0
       @time leapfrog(comm, win, width)
    else
