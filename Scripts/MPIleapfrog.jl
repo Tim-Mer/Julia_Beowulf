@@ -89,9 +89,9 @@ MPI.Barrier(comm)
 @time leapfrog(comm, win)
 if MPI.Comm_rank(comm) == 0
    open("./Files/MPIresults.txt", "w") do fo
-      for i = 1:MPI.Comm_size(comm)
-         height = shared[convert(Int64, ((2*i)))]
-         percentage = shared[convert(Int64, (1+(2*i)))]
+      for i = 0:MPI.Comm_size(comm)-1
+         height = shared[convert(Int64, (1+(2*i)))]
+         percentage = shared[convert(Int64, (2+(2*i)))]
          write(fo, "Simulation $i Wall height: $height Percentage: $percentage\n")
       end
    end
