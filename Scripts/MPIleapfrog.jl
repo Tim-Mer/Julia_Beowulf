@@ -83,19 +83,21 @@ comm = MPI.COMM_WORLD
 shared = zeros(MPI.Comm_size(comm)*2)
 win = MPI.Win()
 MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
-width = 50
 MPI.Barrier(comm)
-if MPI.Comm_rank(comm) == 0
-   @time leapfrog(comm, win, width)
-else
-   leapfrog(comm, win, width)
-end
-if MPI.Comm_rank(comm) == 0
-   open("./Files/MPIresults.txt", "w") do fo
-      for i = 0:MPI.Comm_size(comm)-1
-         height = shared[convert(Int64, (1+(2*i)))]
-         percentage = shared[convert(Int64, (2+(2*i)))]
-         write(fo, "Simulation $i\nWall height: $height\tWidth: $width\nPercentage: $percentage\n\n")
+for width = 50:50:400
+   if MPI.Comm_rank(comm) == 0
+      @time leapfrog(comm, win, width)
+   else
+      leapfrog(comm, win, width)
+   end
+   if MPI.Comm_rank(comm) == 0
+      touch("./Files/MPIresults$width.txt")
+      open("./Files/MPIresults$width.txt", "w") do fo
+         for i = 0:MPI.Comm_size(comm)-1
+            height = shared[convert(Int64, (1+(2*i)))]
+            percentage = shared[convert(Int64, (2+(2*i)))]
+            write(fo, "Simulation $i\nWall height: $height\tWidth: $width\nPercentage: $percentage\n\n")
+         end
       end
    end
 end
