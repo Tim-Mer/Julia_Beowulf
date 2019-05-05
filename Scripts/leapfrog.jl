@@ -1,7 +1,8 @@
 using Plots
+using Statistics
 include("Real.jl")
 include("Imag.jl")
-function leapfrog()
+#function leapfrog()
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
    N = 1000
@@ -16,39 +17,40 @@ function leapfrog()
    R_cur = real(ψ)
    I_cur = imag(ψ)
    V = fill(0.0, N)
-   for i = 500:N
-      V[i] = 1e6
+   for i = 600:N
+      V[i] = -1e6
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
-
+   before = fill(0.0, 400)
+   after = before
    # Do the leapfrog
    #anim = @animate
    for time_step = 1:20000
-      #global R_cur, I_cur
+      global R_cur, I_cur, prob_density, before, after
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
       I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
       prob_density = R_cur.^2+I_next.*I_cur
       I_cur = I_next
       if time_step == 1
-         prob_density = before
+         before = prob_density[200:585]
       end
-      if time_step == 20000
-         prob_density = after
+      if time_step == 19999
+         after = prob_density[615:1000]
       end
-
-      #plot(x, prob_density,
-      #   title = "Wave packet against ramp down",
-      #   xlabel = "x",
-      #   ylabel = "Probability density",
-      #   ylims = (0,200),
-      #   legend = false,
-      #   show = false
-      #   )
+#      plot(x, prob_density,
+#         title = "Wave packet against ramp down",
+#         xlabel = "x",
+#         ylabel = "Probability density",
+#         ylims = (0,200),
+#         legend = false,
+#         show = false
+   #      )
       #plot!(x,abs.(V))
    end #every 20
-   println(before/after)
-   #gif(anim, "./Figures/LeapFrog_ramp_down.gif", fps=30)
-end
 
-@time leapfrog()
+   println(100*(1-((mean(before)-mean(after))/mean(before))))
+   #gif(anim, "./Figures/LeapFrog_testing.gif", fps=30)
+#end
+
+#@time leapfrog()
