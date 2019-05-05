@@ -41,7 +41,7 @@ function leapfrog(comm, shared)
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 600:650
-      V[i] = rank*rank*500
+      V[i] = rank*10000
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 386)
