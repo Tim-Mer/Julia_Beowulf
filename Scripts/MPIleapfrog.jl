@@ -44,7 +44,7 @@ function leapfrog(comm, shared)
       V[i] = (exp.(rank/1.6))
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
-   before = fill(0.0, 400)
+   before = fill(0.0, 386)
    after = before
    # Do the leapfrog
    anim = @animate for time_step = 1:20000
@@ -57,7 +57,7 @@ function leapfrog(comm, shared)
          before = filter(!isnan, prob_density[200:585])
       end
       if time_step == 19999
-         after = filter(!isnan, prob_density[665:1000])
+         after = filter(!isnan, prob_density[200:585])
       end
       plot(x, prob_density,
          title = "Wave packet against $(convert(Int64, round(V[600]))) high wall",
@@ -69,7 +69,7 @@ function leapfrog(comm, shared)
          )
       plot!(x,abs.(V))
    end every 20
-   percentage = round(100*(1-((mean(before)-mean(after))/mean(before))); digits=2)
+   percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
    gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier_$(percentage).gif", fps=30)
    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, 0, 0, win)
    MPI.Put([Float64(percentage)], 1, 0, MPI.Comm_rank(comm), win)

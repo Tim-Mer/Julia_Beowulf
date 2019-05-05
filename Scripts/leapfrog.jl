@@ -21,7 +21,7 @@ include("Imag.jl")
       V[i] = 1e5
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
-   before = fill(0.0, 600)
+   before = fill(0.0, 386)
    after = before
    # Do the leapfrog
    anim = @animate for time_step = 1:20000
@@ -35,10 +35,10 @@ include("Imag.jl")
          before = filter(!isnan, prob_density[200:585])
       end
       if time_step == 19999
-         after = filter(!isnan, prob_density[665:1000])
+         after = filter(!isnan, prob_density[200:585])
       end
       plot(x, prob_density,
-         title = "Wave packet against ramp down",
+         title = "Wave packet test",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
@@ -47,7 +47,7 @@ include("Imag.jl")
          )
       plot!(x,abs.(V))
    end every 20
-   percentage = round(100*(1-((mean(before)-mean(after))/mean(before))); digits=2)
+   percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
    gif(anim, "./Figures/LeapFrog_testing_$percentage.gif", fps=30)
 #end
 
