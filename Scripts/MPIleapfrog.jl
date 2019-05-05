@@ -83,7 +83,7 @@ MPI.Init()
 comm = MPI.COMM_WORLD
 shared = zeros(MPI.Comm_size(comm))
 win = MPI.Win()
-MPI.Win_create(shared, Mpi.INFO_NULL, comm, win)
+MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
 
 @time leapfrog(comm, win)
