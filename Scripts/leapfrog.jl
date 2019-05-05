@@ -18,11 +18,11 @@ include("Imag.jl")
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 600:N
-      V[i] = -1e6
+      V[i] = 1e10
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 400)
-   after = before
+   after = fill(0.0, 400)
    # Do the leapfrog
    #anim = @animate
    for time_step = 1:20000
@@ -33,10 +33,10 @@ include("Imag.jl")
       prob_density = R_cur.^2+I_next.*I_cur
       I_cur = I_next
       if time_step == 1
-         before = prob_density[200:585]
+         before = filter(!isnan, prob_density[200:585])
       end
       if time_step == 19999
-         after = prob_density[615:1000]
+         after = filter(!isnan, prob_density[615:1000])
       end
 #      plot(x, prob_density,
 #         title = "Wave packet against ramp down",

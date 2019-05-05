@@ -56,10 +56,10 @@ function leapfrog(comm)
       prob_density = R_cur.^2+I_next.*I_cur
       I_cur = I_next
       if time_step == 1
-         before = prob_density[200:585]
+         before = filter(!isnan, prob_density[200:585])
       end
       if time_step == 19999
-         after = prob_density[615:1000]
+         after = filter(!isnan, prob_density[665:1000])
       end
       plot(x, prob_density,
          title = "Wave packet against $(convert(Int64, round(V[600]))) high wall",
