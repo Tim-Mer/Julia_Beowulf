@@ -1,0 +1,96 @@
+Simulation 0
+Wall height: 0.0	Width: 100
+Percentage: 100.0
+
+Simulation 1
+Wall height: 8000.0	Width: 100
+Percentage: 99.94
+
+Simulation 2
+Wall height: 16000.0	Width: 100
+Percentage: 99.73
+
+Simulation 3
+Wall height: 24000.0	Width: 100
+Percentage: 99.37
+
+Simulation 4
+Wall height: 32000.0	Width: 100
+Percentage: 98.84
+
+Simulation 5
+Wall height: 40000.0	Width: 100
+Percentage: 98.17
+
+Simulation 6
+Wall height: 48000.0	Width: 100
+Percentage: 97.35
+
+Simulation 7
+Wall height: 56000.0	Width: 100
+Percentage: 96.38
+
+Simulation 8
+Wall height: 64000.0	Width: 100
+Percentage: 95.18
+
+Simulation 9
+Wall height: 72000.0	Width: 100
+Percentage: 93.56
+
+Simulation 10
+Wall height: 80000.0	Width: 100
+Percentage: 91.16
+
+Simulation 11
+Wall height: 88000.0	Width: 100
+Percentage: 87.21
+
+Simulation 12
+Wall height: 96000.0	Width: 100
+Percentage: 80.42
+
+Simulation 13
+Wall height: 104000.0	Width: 100
+Percentage: 69.45
+
+Simulation 14
+Wall height: 112000.0	Width: 100
+Percentage: 54.26
+
+Simulation 15
+Wall height: 120000.0	Width: 100
+Percentage: 37.19
+
+Simulation 16
+Wall height: 128000.0	Width: 100
+Percentage: 21.86
+
+Simulation 17
+Wall height: 136000.0	Width: 100
+Percentage: 10.88
+
+Simulation 18
+Wall height: 144000.0	Width: 100
+Percentage: 4.56
+
+Simulation 19
+Wall height: 152000.0	Width: 100
+Percentage: 1.61
+
+Simulation 20
+Wall height: 160000.0	Width: 100
+Percentage: 0.48
+
+Simulation 21
+Wall height: 168000.0	Width: 100
+Percentage: 0.12
+
+Simulation 22
+Wall height: 176000.0	Width: 100
+Percentage: 0.03
+
+Simulation 23
+Wall height: 184000.0	Width: 100
+Percentage: 0.01
+
