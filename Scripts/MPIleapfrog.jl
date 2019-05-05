@@ -40,8 +40,9 @@ function leapfrog(comm, shared)
    R_cur = real(ψ)
    I_cur = imag(ψ)
    V = fill(0.0, N)
-   for i = 600:650
-      V[i] = rank*10000
+   width = 50
+   for i = 600:convert(Int64, 600+width)
+      V[i] = rank*8000
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 386)
@@ -60,7 +61,7 @@ function leapfrog(comm, shared)
          after = filter(!isnan, prob_density[200:585])
       end
       plot(x, prob_density,
-         title = "Wave packet against $(convert(Int64, round(V[600]))) high wall",
+         title = "Wave packet against $(convert(Int64, round(V[600]))) high $width width barrier",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
