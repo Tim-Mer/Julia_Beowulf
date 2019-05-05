@@ -17,15 +17,14 @@ include("Imag.jl")
    R_cur = real(ψ)
    I_cur = imag(ψ)
    V = fill(0.0, N)
-   for i = 600:N
+   for i = 600:650
       V[i] = 1e5
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 400)
    after = fill(0.0, 400)
    # Do the leapfrog
-   #anim = @animate
-   for time_step = 1:20000
+   anim = @animate for time_step = 1:20000
       global R_cur, I_cur, prob_density, before, after
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
@@ -36,18 +35,18 @@ include("Imag.jl")
          before = filter(!isnan, prob_density[200:585])
       end
       if time_step == 19999
-         after = filter(!isnan, prob_density[615:1000])
+         after = filter(!isnan, prob_density[665:1000])
       end
-#      plot(x, prob_density,
-#         title = "Wave packet against ramp down",
-#         xlabel = "x",
-#         ylabel = "Probability density",
-#         ylims = (0,200),
-#         legend = false,
-#         show = false
-   #      )
-      #plot!(x,abs.(V))
-   end #every 20
+      plot(x, prob_density,
+         title = "Wave packet against ramp down",
+         xlabel = "x",
+         ylabel = "Probability density",
+         ylims = (0,200),
+         legend = false,
+         show = false
+         )
+      plot!(x,abs.(V))
+   end every 20
 
    println(100*(1-((mean(before)-mean(after))/mean(before))))
    gif(anim, "./Figures/LeapFrog_testing.gif", fps=30)
