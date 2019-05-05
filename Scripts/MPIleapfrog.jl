@@ -24,7 +24,7 @@ function imag_psi(N, I_current, R_current, delta_t, delta_x, V)
    return I_next
 end
 
-function leapfrog(comm)
+function leapfrog(comm, shared)
    rank = MPI.Comm_rank(comm)
    ENV["PLOTS_TEST"] = "true"
    ENV["GKSwstype"] = "100"
@@ -41,7 +41,7 @@ function leapfrog(comm)
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 600:650
-      V[i] = 1e5#(exp.(rank/1.6))
+      V[i] = (exp.(rank/1.6))
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 400)
@@ -73,11 +73,26 @@ function leapfrog(comm)
    end every 20
    percentage = round(100*(1-((mean(before)-mean(after))/mean(before))); digits=2)
    gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier_$(percentage).gif", fps=30)
+   MPI.Win_lock(MPI.LOCK_EXCLUSIVE, 0, 0, win)
+   MPI.Put(percentage, 1, 0, MPI.Comm_rank(comm), win)
+   MPI.Win_unlock(0, win)
+   MPI.Barrier(comm)
 end
 
 MPI.Init()
 comm = MPI.COMM_WORLD
+shared = zeros(MPI.Comm_size(comm))
+win = MPI.Win()
+MPI.Win_create(shared, Mpi.INFO_NULL, comm, win)
+MPI.Barrier(comm)
 
-@time leapfrog(comm)
+@time leapfrog(comm, win)
+
+open("./Files/MPIresults.txt") do fo
+   for i = 1:MPI.Comm_size(comm)
+      height = (exp.((i-1)/1.6)
+      write(fo, "Simulation $i Wall height: $height Percentage: $(shared[i])")
+   end
+end
 
 MPI.Finalize()
