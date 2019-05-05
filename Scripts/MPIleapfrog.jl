@@ -47,8 +47,7 @@ function leapfrog(comm, shared)
    before = fill(0.0, 386)
    after = before
    # Do the leapfrog
-   #anim = @animate
-   for time_step = 1:20000
+   anim = @animate for time_step = 1:20000
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
       I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
@@ -60,18 +59,18 @@ function leapfrog(comm, shared)
       if time_step == 19999
          after = filter(!isnan, prob_density[200:585])
       end
-      #plot(x, prob_density,
-      #   title = "Wave packet against $(convert(Int64, round(V[600]))) high wall",
-      #   xlabel = "x",
-      #   ylabel = "Probability density",
-      #   ylims = (0,200),
-      #   legend = false,
-      #   show = false
-      #   )
-      #plot!(x,abs.(V))
-   end# every 20
+      plot(x, prob_density,
+         title = "Wave packet against $(convert(Int64, round(V[600]))) high wall",
+         xlabel = "x",
+         ylabel = "Probability density",
+         ylims = (0,200),
+         legend = false,
+         show = false
+         )
+      plot!(x,abs.(V))
+   end every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   #gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier_$(percentage).gif", fps=30)
+   gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier_$(percentage).gif", fps=30)
    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, 0, 0, win)
    MPI.Put([Float64(convert(Int64, round(V[600])))], 1, 0, convert(Int64, ((2*MPI.Comm_rank(comm)))), win)
    MPI.Put([Float64(percentage)], 1, 0, convert(Int64, (1+(2*MPI.Comm_rank(comm)))), win)
