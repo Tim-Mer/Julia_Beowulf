@@ -70,7 +70,7 @@ function leapfrog(comm, shared, width)
       plot!(x,abs.(V))
    end every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   gif(anim, "./Figures/ParallelTest/MPILeapFrog_height_$(convert(Int64, round(V[600])))_width$(width)_barrier_$(percentage).gif", fps=30)
+   gif(anim, "./Figures/ParallelTest/MPILeapFrog_height_$(convert(Int64, round(V[600])))_width_$(width)_barrier_$(percentage).gif", fps=30)
    MPI.Win_lock(MPI.LOCK_EXCLUSIVE, 0, 0, win)
    MPI.Put([Float64(convert(Int64, round(V[600])))], 1, 0, convert(Int64, ((2*MPI.Comm_rank(comm)))), win)
    MPI.Put([Float64(percentage)], 1, 0, convert(Int64, (1+(2*MPI.Comm_rank(comm)))), win)
