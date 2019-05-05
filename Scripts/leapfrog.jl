@@ -21,8 +21,8 @@ include("Imag.jl")
       V[i] = 1e5
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
-   before = fill(0.0, 400)
-   after = fill(0.0, 400)
+   before = fill(0.0, 600)
+   after = before
    # Do the leapfrog
    anim = @animate for time_step = 1:20000
       global R_cur, I_cur, prob_density, before, after
@@ -47,9 +47,8 @@ include("Imag.jl")
          )
       plot!(x,abs.(V))
    end every 20
-
-   println(100*(1-((mean(before)-mean(after))/mean(before))))
-   gif(anim, "./Figures/LeapFrog_testing.gif", fps=30)
+   percentage = round(100*(1-((mean(before)-mean(after))/mean(before))); digits=2)
+   gif(anim, "./Figures/LeapFrog_testing_$percentage.gif", fps=30)
 #end
 
 #@time leapfrog()

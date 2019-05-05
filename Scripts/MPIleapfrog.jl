@@ -48,8 +48,6 @@ function leapfrog(comm, shared)
    after = before
    # Do the leapfrog
    anim = @animate for time_step = 1:20000
-      before = fill(0.0, 400)
-      after = before
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
       I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
