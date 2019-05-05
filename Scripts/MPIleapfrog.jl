@@ -95,7 +95,7 @@ if MPI.Comm_rank(comm) == 0
       for i = 0:MPI.Comm_size(comm)-1
          height = shared[convert(Int64, (1+(2*i)))]
          percentage = shared[convert(Int64, (2+(2*i)))]
-         write(fo, "Simulation $i\nWall height: $height\tWidth: $width\nPercentage: $percentage\n")
+         write(fo, "Simulation $i\nWall height: $height\tWidth: $width\nPercentage: $percentage\n\n")
       end
    end
 end
