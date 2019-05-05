@@ -85,8 +85,11 @@ shared = zeros(MPI.Comm_size(comm)*2)
 win = MPI.Win()
 MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
-
-@time leapfrog(comm, win)
+if MPI.Comm_rank(comm) == 0
+   @time leapfrog(comm, win)
+else
+   leapfrog(comm, win)
+end
 if MPI.Comm_rank(comm) == 0
    open("./Files/MPIresults.txt", "w") do fo
       for i = 0:MPI.Comm_size(comm)-1
