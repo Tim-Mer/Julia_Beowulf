@@ -86,22 +86,22 @@ shared = zeros(MPI.Comm_size(comm)*2)
 win = MPI.Win()
 MPI.Win_create(shared, MPI.INFO_NULL, comm, win)
 MPI.Barrier(comm)
-fo = open("./Files/MPIresults.csv", "w")
-for width = 0:25:200
-   if MPI.Comm_rank(comm) == 0
-      @time leapfrog(comm, win, width)
-   else
-      leapfrog(comm, win, width)
-   end
-   if MPI.Comm_rank(comm) == 0
+open("./Files/MPIresults.csv", "w") do fo
+   for width = 0:25:200
+      if MPI.Comm_rank(comm) == 0
+         @time leapfrog(comm, win, width)
+      else
+         leapfrog(comm, win, width)
+      end
+      if MPI.Comm_rank(comm) == 0
          for i = 0:MPI.Comm_size(comm)-1
             height = shared[convert(Int64, (1+(2*i)))]
             percentage = shared[convert(Int64, (2+(2*i)))]
             writedlm(fo, [i height width percentage], ",")
          end
+      end
    end
 end
-close(fo)
 MPI.Barrier(comm)
 
 MPI.Finalize()
