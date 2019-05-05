@@ -49,6 +49,7 @@ include("Imag.jl")
    end every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
    gif(anim, "./Figures/LeapFrog_testing_$percentage.gif", fps=30)
+   println(percentage)
 #end
 
 #@time leapfrog()
