@@ -24,7 +24,8 @@ include("Imag.jl")
    before = fill(0.0, 386)
    after = before
    # Do the leapfrog
-   anim = @animate for time_step = 1:20000
+   #anim = @animate
+   for time_step = 1:20000
       global R_cur, I_cur, prob_density, before, after
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
       R_cur = R_next
@@ -37,18 +38,18 @@ include("Imag.jl")
       if time_step == 19999
          after = filter(!isnan, prob_density[200:585])
       end
-      plot(x, prob_density,
-         title = "Wave packet test",
-         xlabel = "x",
-         ylabel = "Probability density",
-         ylims = (0,200),
-         legend = false,
-         show = false
-         )
-      plot!(x,abs.(V))
-   end every 20
+#      plot(x, prob_density,
+#         title = "Wave packet test",
+#         xlabel = "x",
+#         ylabel = "Probability density",
+#         ylims = (0,200),
+#         legend = false,
+#         show = false
+#         )
+#      plot!(x,abs.(V))
+end #every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   gif(anim, "./Figures/LeapFrog_testing_$percentage.gif", fps=30)
+   #gif(anim, "./Figures/LeapFrog_testing_$percentage.gif", fps=30)
    println(percentage)
 #end
 
