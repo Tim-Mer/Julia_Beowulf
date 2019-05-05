@@ -18,7 +18,7 @@ include("Imag.jl")
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 600:N
-      V[i] = 1e10
+      V[i] = 1e5
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 400)
@@ -50,7 +50,7 @@ include("Imag.jl")
    end #every 20
 
    println(100*(1-((mean(before)-mean(after))/mean(before))))
-   #gif(anim, "./Figures/LeapFrog_testing.gif", fps=30)
+   gif(anim, "./Figures/LeapFrog_testing.gif", fps=30)
 #end
 
 #@time leapfrog()
