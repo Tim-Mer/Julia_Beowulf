@@ -41,7 +41,7 @@ function leapfrog(comm, shared)
    I_cur = imag(ψ)
    V = fill(0.0, N)
    for i = 600:650
-      V[i] = (exp.(rank/1.6))
+      V[i] = 1e5#(exp.(rank/1.6))
    end
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 400)
@@ -90,8 +90,8 @@ MPI.Barrier(comm)
 
 open("./Files/MPIresults.txt") do fo
    for i = 1:MPI.Comm_size(comm)
-      height = (exp.((i-1)/1.6)
-      write(fo, "Simulation $i Wall height: $height Percentage: $(shared[i])")
+      height = (exp.((i-1)/1.6))
+      write(fo, "Simulation $i Wall height: $height Percentage: $(shared[i])\n")
    end
 end
 
