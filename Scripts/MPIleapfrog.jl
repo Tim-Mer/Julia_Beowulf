@@ -1,5 +1,6 @@
 using Plots
 using MPI
+using Statistics
 
 function real_psi(N, R_current, I_current, delta_t, delta_x, V)
     R_next = fill(0.0, N)
