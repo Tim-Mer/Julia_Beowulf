@@ -47,7 +47,7 @@ function leapfrog(comm)
    before = fill(0.0, 400)
    after = before
    # Do the leapfrog
-   anim = @animate for time_step = 1:2000
+   anim = @animate for time_step = 1:20000
       before = fill(0.0, 400)
       after = before
       R_next = real_psi(N, R_cur, I_cur, Δ_t, Δ_x, V)
@@ -71,7 +71,7 @@ function leapfrog(comm)
          )
       plot!(x,abs.(V))
    end every 20
-   percentage = convert(Int64, round(100*(1-((mean(before)-mean(after))/mean(before)))))
+   percentage = round(100*(1-((mean(before)-mean(after))/mean(before))); digits=2)
    gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier_$(percentage).gif", fps=30)
 end
 
