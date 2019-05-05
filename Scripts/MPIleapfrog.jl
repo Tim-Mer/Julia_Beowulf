@@ -71,7 +71,8 @@ function leapfrog(comm)
          )
       plot!(x,abs.(V))
    end every 20
-   gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier$(100*(1-((mean(before)-mean(after))/mean(before)))).gif", fps=30)
+   percentage = round(100*(1-((mean(before)-mean(after))/mean(before))); digits=2)
+   gif(anim, "./Figures/ParallelTest/MPILeapFrog_$(convert(Int64, round(V[600])))_barrier$(percentage).gif", fps=30)
 end
 
 MPI.Init()
