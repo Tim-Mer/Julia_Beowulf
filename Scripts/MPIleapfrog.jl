@@ -93,8 +93,8 @@ for width = 0:25:200
       leapfrog(comm, win, width)
    end
    if MPI.Comm_rank(comm) == 0
-      touch("./Files/MPItest$width.csv")
-      open("./Files/MPIresults$width.csv", "w") do fo
+      touch("./Files/MPIresults.csv")
+      open("./Files/MPIresults.csv", "w") do fo
          for i = 0:MPI.Comm_size(comm)-1
             height = shared[convert(Int64, (1+(2*i)))]
             percentage = shared[convert(Int64, (2+(2*i)))]
