@@ -1,5 +1,6 @@
 using Plots
 using Statistics
+using DelimitedFiles
 include("Real.jl")
 include("Imag.jl")
 #function leapfrog()
@@ -51,6 +52,9 @@ end #every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
    #gif(anim, "./Figures/LeapFrog_testing_$percentage.gif", fps=30)
    println(percentage)
+#   open("./Files/test.csv", "w") do f
+#      writedlm(f, [before after], ",")
+   #end
 #end
 
 #@time leapfrog()
