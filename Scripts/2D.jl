@@ -27,12 +27,12 @@ for i = 1:N
    end
 end
 V = zeros(N,N)
-for i = 1:98
+for i = 1:90
    for j = 100:115
       V[i,j] = 1e4
    end
 end
-for i = 102:200
+for i = 110:200
    for j = 100:115
       V[i,j] = 1e4
    end
