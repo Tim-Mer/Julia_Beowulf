@@ -27,9 +27,14 @@ for i = 1:N
    end
 end
 V = zeros(N,N)
-for i = 1:N
-   for j = convert(Int64, N/2):N
-      V[i,j] = 1e3
+for i = 1:98
+   for j = 100:115
+      V[i,j] = 1e4
+   end
+end
+for i = 102:200
+   for j = 100:115
+      V[i,j] = 1e4
    end
 end
 # Create a 2D potential wall
@@ -52,7 +57,7 @@ anim = @animate for time_step = 1:2000
    prob_density = R_current.^2 + I_next.*I_current
    I_current = I_next
    surface(x[1,:],y[:,1], prob_density,
-      title = "Probability density function (wall)",
+      title = "Probability density function (slit)",
       xlabel = "x",
       ylabel = "y",
       zlabel = "ps*psi",
@@ -66,6 +71,6 @@ anim = @animate for time_step = 1:2000
    );
    #display(plt)
 end every 5
-gif(anim, "./Figures/bigtwoD_Leapfrog_wall.gif", fps=30)
+gif(anim, "./Figures/bigtwoD_Leapfrog_slit.gif", fps=30)
 
 #gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
