@@ -21,12 +21,12 @@ include("Imag.jl")
    #t = collect(0:1/(pi*50.65):2*pi)
    #wave = 500000 .+ 500000 .* cos.(2 * pi .+ t)
    #length(wave)
-   for i = 550:600
-      V[i] = 5e4
+   for i = 600:N
+      V[i] = -(i-599)*2500
    end
-   for i = 700:750
-      V[i] = 5e4
-   end
+   #for i = 700:750
+   #   V[i] = 5e4
+   #end
    #V = wave
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    before = fill(0.0, 386)
@@ -46,7 +46,7 @@ include("Imag.jl")
          after = filter(!isnan, prob_density[200:585])
       end
       plot(x, prob_density,
-         title = "Wave packet testing",
+         title = "Wave packet ramp down",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
@@ -54,9 +54,9 @@ include("Imag.jl")
          legend = false,
          show = false
          )
-      plot!(twinx() ,abs.(V),
+      plot!(twinx() ,(V),
          xticks = 0:0.25:1,
-         ylims = (0, (V[600])),
+         ylims = (0, minimum((V))),
          legend = false,
          show = false,
          color = :red
@@ -64,11 +64,11 @@ include("Imag.jl")
       #display(plt)
 end every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   gif(anim, "./Figures/LeapFrog_testing_double_barrier.gif", fps=30)
+   gif(anim, "./Figures/LeapFrog_test_ramp_down.gif", fps=30)
    println(percentage)
 #   open("./Files/test.csv", "w") do f
 #      writedlm(f, [before after], ",")
-   #end
+#   end
 #end
 
 #@time leapfrog()
