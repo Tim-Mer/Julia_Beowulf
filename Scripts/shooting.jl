@@ -24,7 +24,7 @@ minimum_delta_E = 0.005
 E = E_initial
 j = 1
 while abs(delta_E) > minimum_delta_E
-    global E, psi, i, last_diverge, delta_E, plt
+    global E, psi, i, last_diverge, delta_E, plt, j
     psi = fill(0.0, N)
     psi[1] = 1
     psi[2] = 1
@@ -44,5 +44,10 @@ while abs(delta_E) > minimum_delta_E
     E = E + delta_E
     last_diverge = sign(psi[i+1])
     display(plt)
-    sleep(0.5)
+    #sleep(0.5)
+    j += 1
+    #if j%5 == 0
+        savefig(plt, "./Figures/shooting_$(j).png")
+    #end
+    println(j)
 end

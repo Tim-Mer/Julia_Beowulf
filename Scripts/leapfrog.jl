@@ -12,9 +12,11 @@ include("Imag.jl")
    C = fill(10.0, N)
    σ_sqrd = fill(1e-3, N)
    k_0 = 500.0
-   Δ_x = 1e-3
-   Δ_t = 5e-8
+   Δ_x = 1e-4#1e-3
+   Δ_t = 5e-7#5e-8
    ψ = C.*exp.((-(x-x_0).^2)./σ_sqrd).*exp.((k_0*x)*1im)
+   ψ[1] = 0
+   ψ[1000] = 0
    R_cur = real(ψ)
    I_cur = imag(ψ)
    V = fill(0.0, N)
@@ -22,7 +24,7 @@ include("Imag.jl")
    #wave = 500000 .+ 500000 .* cos.(2 * pi .+ t)
    #length(wave)
    for i = 600:N
-      V[i] = -(i-599)*2500
+      V[i] = 1e6#-(i-599)*2500
    end
    #for i = 700:750
    #   V[i] = 5e4
@@ -46,7 +48,7 @@ include("Imag.jl")
          after = filter(!isnan, prob_density[200:585])
       end
       plot(x, prob_density,
-         title = "Wave packet ramp down",
+         title = "Wave packet spreading with time",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
@@ -54,17 +56,18 @@ include("Imag.jl")
          legend = false,
          show = false
          )
-      plot!(twinx() ,(V),
-         xticks = 0:0.25:1,
-         ylims = (0, minimum((V))),
-         legend = false,
-         show = false,
-         color = :red
-         )
-      #display(plt)
+#      plot!(twinx() ,(V),
+#         xticks = 0:0.25:1,
+#         xlims = (0,1),
+#         ylims = (0, maximum((V))),
+#         legend = false,
+#         show = false,
+#         color = :red
+#         )
+         #display(plt)
 end every 20
    percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   gif(anim, "./Figures/LeapFrog_test_ramp_down.gif", fps=30)
+   gif(anim, "./Figures/LeapFrog_testing_spreading.gif", fps=30)
    println(percentage)
 #   open("./Files/test.csv", "w") do f
 #      writedlm(f, [before after], ",")
