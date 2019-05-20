@@ -14,22 +14,22 @@ delta_x = 0.01
 E_initial = 1.879
 delta_E = 0.1
 x = collect(delta_x: delta_x: N*delta_x)
-V = fill(0.0, N);
+V = fill(0.0, N)
 for i = 101:N
   V[i] = 1000
 end
 b = 1.5
 last_diverge = 0
-minimum_delta_E = 0.005
+minimum_delta_E = 0.000000000005
 E = E_initial
-j = 1
+j = 0
 while abs(delta_E) > minimum_delta_E
     global E, psi, i, last_diverge, delta_E, plt, j
     psi = fill(0.0, N)
     psi[1] = 1
     psi[2] = 1
     psi,i = calculate_psi(psi, N, delta_x, E, b,V)
-    plt = plot(append!(-(x[end:-1:1]), x), append!((psi[end:-1:1]), psi),
+    plt = plot!(append!(-(x[end:-1:1]), x), append!((psi[end:-1:1]), psi),
     title = "Square well",
     xlims = (-2, 2),
     ylims = (-2, 2),
@@ -44,10 +44,8 @@ while abs(delta_E) > minimum_delta_E
     E = E + delta_E
     last_diverge = sign(psi[i+1])
     display(plt)
-    #sleep(0.5)
+    #sleep(0.1)
     j += 1
-    #if j%5 == 0
-        savefig(plt, "./Figures/shooting_$(j).png")
-    #end
-    println(j)
+    #savefig(plt, "./Figures/test/shooting$(E_initial)_$(j).png")
+    println(E)
 end
