@@ -49,14 +49,15 @@ I_current = I_initial
 R_current = R_initial
 I_next = imag_psi(N, I_current, R_current, delta_t, delta_x, V)
 
-anim = @animate for time_step = 1:2000
+#anim = @animate
+for time_step = 1:2#000
    global R_current, I_current, N, delta_t, delta_x, V, prob_density
    R_next = real_psi_2D(N, R_current, I_current, delta_t, delta_x, V)
    R_current = R_next
    I_next = imag_psi_2D(N, I_current, R_current, delta_t, delta_x, V)
    prob_density = R_current.^2 + I_next.*I_current
    I_current = I_next
-   surface(x[1,:],y[:,1], prob_density,
+   plt = surface(x[1,:],y[:,1], prob_density,
       title = "Probability density function (slit)",
       xlabel = "x",
       ylabel = "y",
@@ -67,10 +68,12 @@ anim = @animate for time_step = 1:2000
       grid = true,
       cbar = true,
       legend = false,
-      show = false
+      show = false,
+      camera = (30,30)
    );
-   #display(plt)
-end every 5
-gif(anim, "./Figures/bigtwoD_Leapfrog_slit.gif", fps=30)
+   plt = surface!(V)
+   display(plt)
+end #every 5
+#gif(anim, "./Figures/test/bigtwoD_Leapfrog_slit.gif", fps=30)
 
 #gif(anim, "../Figures/twoD_Leapfrog_cliff.gif", fps=30)
