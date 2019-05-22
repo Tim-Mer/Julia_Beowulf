@@ -1,3 +1,4 @@
+# This file is ran using the numgentest script located in the home directory
 using RandomNumbers.MersenneTwisters
 using MPI
 
