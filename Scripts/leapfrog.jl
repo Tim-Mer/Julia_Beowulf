@@ -12,7 +12,7 @@ include("Imag.jl")
    x_0 = fill(0.4, N) #starting possition 0.4
    C = fill(10.0, N) #normalising factor 10.0
    σ_sqrd = fill(1e-3, N) #width 1e-3
-   k_0 = 500.0#+p #speed 500.0
+   k_0 = 550.0#+p #speed 500.0
    Δ_x = 1e-3 #change in distance 1e-3
    Δ_t = 5e-8 #change in time 5e-8
    ψ = C.*exp.((-(x-x_0).^2)./σ_sqrd).*exp.((k_0*x)*1im) #starting wave equation
@@ -28,11 +28,11 @@ include("Imag.jl")
    #   V[i] = -500*i
    #end
    for i = 600:650
-      V[i] = -5e5#1e6#-(i-599)*2500
+      V[i] = 1e5#1e6#-(i-599)*2500
    end
-   #for i = 700:750
-   #   V[i] = 5e5#1e6
-   #end
+   for i = 700:750
+      V[i] = 1e5#1e6
+   end
    #V = wave
    I_next = imag_psi(N, I_cur, R_cur, Δ_t, Δ_x, V)
    #before = fill(0.0, 386)
@@ -72,13 +72,13 @@ include("Imag.jl")
          color = :red
          )
          if time_step == 1 || time_step%2500 == 0
-            savefig(plt, "./Figures/report/test Double Barrier V=$(maximum(V)) k=$(convert(Int64, k_0)) frame=$(time_step).png")
+            savefig(plt, "./Figures/report/test Double Barriersame height V=$(maximum(V)) k=$(convert(Int64, k_0)) frame=$(time_step).png")
             println(time_step)
          end
          #display(plt)
 end every 20
    #percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   gif(anim, "./Figures/test/Leapfrog_Double Barrier_test_V=$(maximum(V))_k=$(convert(Int64, k_0)).gif", fps=30)
+   gif(anim, "./Figures/test/Leapfrog_Double Barrier same height_test_V=$(maximum(V))_k=$(convert(Int64, k_0)).gif", fps=30)
    #println(percentage)
 #   open("./Files/test.csv", "w") do f
 #      writedlm(f, [before after], ",")

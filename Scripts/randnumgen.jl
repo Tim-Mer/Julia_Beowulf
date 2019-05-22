@@ -1,3 +1,5 @@
+# this file was used to learn MPI, look at simplerng.jl for actual script
+
 using RandomNumbers.MersenneTwisters
 using MPI
 import Printf: @printf
