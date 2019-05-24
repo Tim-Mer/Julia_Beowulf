@@ -53,7 +53,7 @@ include("Imag.jl")
 #         after = filter(!isnan, prob_density[200:585])
 #      end
       plt = plot(x, prob_density,
-         title = "Double Barrier k=$(convert(Int64, k_0)) frame $(time_step)",#sigma_sqrd=$(σ_sqrd[1])",#k=$(convert(Int64, k_0)) frame=$(time_step)",
+         title = "Reflection from wall",#Double Barrier k=$(convert(Int64, k_0)) frame $(time_step)",#sigma_sqrd=$(σ_sqrd[1])",#k=$(convert(Int64, k_0)) frame=$(time_step)",
          xlabel = "x",
          ylabel = "Probability density",
          ylims = (0,200),
@@ -62,23 +62,23 @@ include("Imag.jl")
          right_margin = 10mm,
          show = false
          )
-      plt = plot!(twinx(), V,
-         xaxis = false,
-         grid = false,
-         ylims = (0,maximum(V)),
-         xlims = (1, N),
-         legend = false,
-         show = false,
-         color = :red
-         )
-         if time_step == 1 || time_step%2500 == 0
-            savefig(plt, "./Figures/report/test Double Barriersame height V=$(maximum(V)) k=$(convert(Int64, k_0)) frame=$(time_step).png")
-            println(time_step)
-         end
+#      plt = plot!(twinx(), V,
+#         xaxis = false,
+#         grid = false,
+#         ylims = (0,maximum(V)),
+#         xlims = (1, N),
+#         legend = false,
+#         show = false,
+#         color = :red
+#         )
+#         if time_step == 1 || time_step%2500 == 0
+#            savefig(plt, "./Figures/report/test Double Barriersame height V=$(maximum(V)) k=$(convert(Int64, k_0)) frame=$(time_step).png")
+#            println(time_step)
+#         end
          #display(plt)
 end every 20
    #percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   gif(anim, "./Figures/test/Leapfrog_Double Barrier same height_test_V=$(maximum(V))_k=$(convert(Int64, k_0)).gif", fps=30)
+   #gif(anim, "./Figures/test/Leapfrog_Double Barrier same height_test_V=$(maximum(V))_k=$(convert(Int64, k_0)).gif", fps=30)
    #println(percentage)
 #   open("./Files/test.csv", "w") do f
 #      writedlm(f, [before after], ",")
