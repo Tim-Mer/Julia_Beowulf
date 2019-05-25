@@ -28,7 +28,7 @@ function leapfrog(p)
    #   V[i] = -500*i
    #end
    for i = 600:650
-      V[i] = 1e5#1e6#-(i-599)*2500
+      V[i] = 5e4#1e6#-(i-599)*2500
    end
    for i = 700:750
       V[i] = 1e5#1e6
@@ -39,7 +39,7 @@ function leapfrog(p)
    after = before
    # Do the leapfrog
    trigger = 0
-   global R_cur, I_cur, prob_density, before, after, trigger, time_step
+   global R_cur, I_cur, prob_density, before, after, trigger, time_step, plt
    #anim = @animate for
       time_step = 0#:20000
       while trigger == 0
@@ -79,7 +79,7 @@ function leapfrog(p)
          )
          after = filter(!isnan, prob_density[775:1000])
 #         if time_step == 1 || time_step%2500 == 0
-#            savefig(plt, "./Figures/report/test Double Barriersame height V=$(maximum(V)) k=$(convert(Int64, k_0)) frame=$(time_step).png")
+#            savefig(plt, "./Figures/report/test Double Barriersame height k=$(convert(Int64, k_0)) frame=$(time_step).png")
 #            println(time_step)
 #         end
          display(plt)
@@ -90,8 +90,10 @@ function leapfrog(p)
          #savefig(plt, "./Figures/test double barrier wall.png")
 end #every 20
    #percentage = round(100*(((mean(before)-mean(after))/mean(before))); digits=2)
-   percentage = round(100*(((mean(filter(!iszero, round.(before, digits=2)))-mean(filter(!iszero, round.(after, digits=2))))/mean(filter(!iszero, round.(before, digits=2))))); digits=2)
+   #percentage = round(100*(1-(((mean(filter(!iszero, round.(before, digits=2)))-mean(filter(!iszero, round.(after, digits=2))))/mean(filter(!iszero, round.(before, digits=2)))))); digits=2)
+   percentage = maximum(before)-maximum(after)
    println("k=$k_0 Per=$percentage")
+   savefig(plt, "./Figures/report/Double Barrier not same Height TEST max V=$(maximum(V)) k=$(convert(Int64, k_0)) frame=$(time_step) per=$percentage.png")
    return k_0, percentage
    #gif(anim, "./Figures/test/test Leapfrog_Double Barrier same height_test_V=$(maximum(V))_k=$(convert(Int64, k_0)).gif", fps=30)
    #println(percentage)
@@ -101,7 +103,7 @@ end #every 20
 #end
 end
 open("./Files/testdb.csv", "w") do f
-   for p = 0:800
+   for p = 0:20:3000
       k,p = leapfrog(p)
       writedlm(f, [k p], ",")
    end
