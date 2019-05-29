@@ -42,7 +42,7 @@ function leapfrog(p)
    trigger2 = 0
    global R_cur, I_cur, prob_density, before, after, trigger, time_step, plt
    #anim = @animate for
-      time_step = 0#:20000
+      time_step = 0:20000
       while trigger == 0
          time_step += 1
       global R_cur, I_cur, prob_density, before, after, trigger
